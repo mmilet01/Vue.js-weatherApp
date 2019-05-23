@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h1>SOMETHING</h1>
-    <!--     <div v-if="!!city">{{city.city.name}}</div>
-    -->
+    <h1>Current weather</h1>
+
     <div v-if="!!city2">
       <SingleCity v-bind:city="city2"/>
     </div>
