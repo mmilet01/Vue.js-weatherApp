@@ -6,6 +6,9 @@
     <div v-if="!!city2">
       <SingleCity v-bind:city="city2"/>
     </div>
+    <div v-if="!!city">
+      <CityForecast v-bind:city="city"/>
+    </div>
   </div>
 </template>
 
@@ -13,12 +16,14 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 import SingleCity from "@/components/SingleCity.vue";
+import CityForecast from "@/components/CityForecast.vue";
 const constants = require("../assets/constants.json");
 
 @Component({
   //all compoennt options are allowed in here
   components: {
-    SingleCity
+    SingleCity,
+    CityForecast
   }
 })
 export default class Details extends Vue {
@@ -49,7 +54,8 @@ export default class Details extends Vue {
       )
       .then(res => {
         this.city2 = res.data;
-        console.log(this.city2);
+        /*         console.log(this.city2);
+         */
       })
       .catch(err => console.log("Errors", err));
   }

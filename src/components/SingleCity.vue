@@ -50,8 +50,8 @@ export default class CityWeather extends Vue {
   @Prop() city!: any;
 
   created() {
-    console.log(this.city);
-    this.getIcon();
+    /*     console.log(this.city);
+     */ this.getIcon();
     this.getWindDirection();
     this.sunrise_sunset();
   }
@@ -67,7 +67,8 @@ export default class CityWeather extends Vue {
       this.sunriseUnix.getHours() + ":" + this.sunriseUnix.getMinutes();
     this.sunset =
       this.sunsetUnix.getHours() + ":" + this.sunsetUnix.getMinutes();
-    console.log(this.sunrise);
+    /*     console.log(this.sunrise);
+     */
   }
   getIcon() {
     this.iconURL = `http://openweathermap.org/img/w/${
