@@ -35,6 +35,22 @@ export default class CityForecast extends Vue {
   saturday: Array<any> = [];
   sunday: Array<any> = [];
 
+  days: Array<string> = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednseday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednseday",
+    "Thursday",
+    "Friday"
+  ];
+
   array: Array<Array<any>> = [
     this.sunday,
     this.monday,

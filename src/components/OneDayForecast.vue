@@ -1,10 +1,9 @@
 <template>
   <div>
-    <p>{{days[day]}}</p>
+    <p>{{days[day]}}: {{date}}</p>
     <div class="forecast">
       <div v-for="city in array" v-bind:key="city.id" class="forecast2">
-        <p>{{city.dt_txt}}</p>
-        <p>{{city.weather[0].description}}</p>
+        <HourlyForecast v-bind:city="city"/>
       </div>
     </div>
     <hr>
@@ -13,34 +12,27 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import HourlyForecast from "@/components/HourlyForecast.vue";
 
 @Component({
   //all compoennt options are allowed in here
+  components: {
+    HourlyForecast
+  }
 })
 export default class Details extends Vue {
   @Prop() array!: any;
   @Prop() day2!: any;
   @Prop() index!: any;
+  @Prop() days!: any;
 
   day: number = 0;
-  days: Array<string> = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednseday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednseday",
-    "Thursday",
-    "Friday"
-  ];
+  date: String = "";
 
   created() {
     this.day = this.day2 + this.index;
+    console.log(this.array);
+    this.date = this.array[0].dt_txt.slice(5, 10);
   }
 }
 </script>
