@@ -15,7 +15,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 import SingleCity from "@/components/SingleCity.vue";
-import CityForecast from "@/components/CityForecast.vue";
+import CityForecast from "@/components/forecast/CityForecast.vue";
 const constants = require("../assets/constants.json");
 
 @Component({

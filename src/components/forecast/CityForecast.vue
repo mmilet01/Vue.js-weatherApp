@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import OneDayForecast from "@/components/OneDayForecast.vue";
+import OneDayForecast from "@/components/forecast/OneDayForecast.vue";
 
 @Component({
   //all compoennt options are allowed in here

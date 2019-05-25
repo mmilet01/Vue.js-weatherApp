@@ -24,7 +24,7 @@ export default Vue.extend({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: lightblue;
+  background-color: black;
 }
 /* #nav {
   padding: 30px;

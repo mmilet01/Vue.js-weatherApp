@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import HourlyForecast from "@/components/HourlyForecast.vue";
+import HourlyForecast from "@/components/forecast/HourlyForecast.vue";
 
 @Component({
   //all compoennt options are allowed in here

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form v-on:submit="getCity">
+    <form v-on:submit.prevent="getCity">
       <input type="text" placeholder="city" v-model="city">
       <input type="submit">
     </form>
@@ -39,7 +39,11 @@ export default class SearchInput extends Vue {
         this.cityData = res.data;
         this.city = "";
       })
-      .catch(err => console.log("Errors", err));
+      .catch(err => {
+        alert(`There is no city with a name: ${this.city}`);
+        console.log("Errors", err);
+        this.city = "";
+      });
   }
 }
 </script>
