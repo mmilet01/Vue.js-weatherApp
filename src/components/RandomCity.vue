@@ -1,9 +1,17 @@
 <template>
   <div>
-    <div>SAY HELLO FROM A RANDOM CITY</div>
-    <button v-on:click="randomCity">Random</button>
+    <div class="nav">
+      <h1>
+        Weather in a
+        <button v-on:click="randomCity">Random</button> city
+      </h1>
+    </div>
     <div v-if="city">
       <SingleCity v-bind:city="city"/>
+    </div>
+    <div class="right">
+      <h1>Not the city you want?</h1>
+      <SearchInput/>
     </div>
   </div>
 </template>
@@ -11,6 +19,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import SingleCity from "@/components/SingleCity.vue";
+import SearchInput from "@/components/SearchInput.vue";
 let cities: Array<any> = require("../assets/city.list.json");
 const constants = require("../assets/constants.json");
 import axios from "axios";
@@ -19,16 +28,17 @@ console.log(cities[500]);
 @Component({
   //all compoennt options are allowed in here
   components: {
-    SingleCity
+    SingleCity,
+    SearchInput
   }
 })
 export default class RandomCity extends Vue {
   city: any = null;
 
-  created(){
+  created() {
     this.randomCity();
   }
-  
+
   randomCity() {
     const key = constants.API_KEY;
     console.log(key);
@@ -48,4 +58,18 @@ export default class RandomCity extends Vue {
 </script>
 
 <style scoped>
+.nav {
+  border-bottom: 4px solid dodgerblue;
+  color: dodgerblue;
+}
+.right h1 {
+  border-top: 2px solid dodgerblue;
+  padding-top: 10px;
+  color: dodgerblue;
+}
+button {
+  margin: 5px;
+  box-shadow: 2;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+}
 </style>

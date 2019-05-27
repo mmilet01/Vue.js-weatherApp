@@ -2,16 +2,19 @@
   <div id="app">
     <Navbar/>
     <router-view/>
+    <Footer/>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Navbar from "@/components/Navbar.vue";
+import Footer from "@/components/Footer.vue";
 
 export default Vue.extend({
   components: {
-    Navbar
+    Navbar,
+    Footer
   }
 });
 </script>
@@ -24,18 +27,29 @@ export default Vue.extend({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: black;
-}
-/* #nav {
-  padding: 30px;
+  background-color: white;
 }
 
-#nav a {
+button {
+  background-color: dodgerblue; /* Green */
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+a {
   font-weight: bold;
   color: #2c3e50;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-} */
+a.router-link-exact-active {
+  color: blue;
+}
 </style>

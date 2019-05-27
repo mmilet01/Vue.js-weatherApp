@@ -1,8 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-        <RandomCity/>
-    <SearchInput/>
+    <RandomCity/>
   </div>
 </template>
 

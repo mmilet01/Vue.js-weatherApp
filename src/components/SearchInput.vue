@@ -1,8 +1,8 @@
 <template>
   <div>
     <form v-on:submit.prevent="getCity">
-      <input type="text" placeholder="city" v-model="city">
-      <input type="submit">
+      <input type="text" placeholder="Search Cities" v-model="city" class="input">
+      <input type="submit" class="button" value="Search">
     </form>
     <!--     <button v-on:click="getCity">Search</button>
     -->
@@ -49,4 +49,30 @@ export default class SearchInput extends Vue {
 </script>
 
 <style scoped>
+.input {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: none;
+  border: none;
+  font-size: 26px;
+  border-bottom: 2px solid dodgerblue;
+  color: dodgerblue;
+  margin-bottom: 15px;
+}
+.input::placeholder {
+  color: dodgerblue;
+}
+.button {
+  background-color: dodgerblue; /* Green */
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 2px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+}
 </style>

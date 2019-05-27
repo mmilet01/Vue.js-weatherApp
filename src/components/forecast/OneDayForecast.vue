@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{days[day]}}: {{date}}</p>
+    <h3>{{days[day]}}: {{date}}</h3>
     <div class="forecast">
       <div v-for="city in array" v-bind:key="city.id" class="forecast2">
         <HourlyForecast v-bind:city="city"/>

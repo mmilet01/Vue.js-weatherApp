@@ -1,13 +1,10 @@
 <template>
   <div class="container">
-    <div>
-      <h1>{{city.name}}</h1>
-      <p>{{currentTime}}h CEST</p>
-    </div>
+    <h1 class="name">{{city.name}}</h1>
 
-    <div>
-      <h1>{{city.main.temp}} °C</h1>
-      <p>{{city.main.temp_min}}°C - {{city.main.temp_max}}°C</p>
+    <div class="temp">
+      <i class="fas fa-thermometer-half fa-2x"></i>
+      <h1>{{temp}} °C</h1>
     </div>
 
     <div>
@@ -21,7 +18,7 @@
       <p>Pressure: {{city.main.pressure}} hPa</p>
       <p>Wind: {{city.wind.speed}}m/s {{windDirection}}</p>
       <button class="link">
-        <router-link class="link" v-bind:to="routeURL">Details</router-link>
+        <router-link class="link" v-bind:to="routeURL">Forecast</router-link>
       </button>
     </div>
   </div>
@@ -40,6 +37,7 @@ export default class CityWeather extends Vue {
   iconURL: string = "";
   windDirection: string = "";
   routeURL: string = "";
+  temp: any = null;
 
   @Prop() city!: any;
 
@@ -48,6 +46,7 @@ export default class CityWeather extends Vue {
     this.getIcon();
     this.getWindDirection();
     this.routeURL = "/city/" + this.city.id;
+    this.temp = Math.round(this.city.main.temp);
   }
   beforeUpdate() {
     this.getIcon();
@@ -86,17 +85,31 @@ export default class CityWeather extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+/* .temp p {
+  color: rgb(190, 76, 76);
+}*/
+
+.temp {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.temp h1 {
+  margin-left: 8px;
+}
 .link {
   margin-top: 30px;
   text-decoration: none;
 }
 .container {
-  /* 
-  display: flex;
-  justify-content: space-between; */
-  margin-top: 20px;
+  margin: 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 5px;
+}
+.name {
+  align-self: center;
 }
 img {
   width: 55px;
@@ -106,7 +119,11 @@ img {
 }
 h1 {
   padding: 0;
-  margin: 0;
+  font-weight: bold;
+  font-size: 42px;
+}
+div {
+  padding-top: 8px;
 }
 p {
   margin: 3px;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="hourly">
     <p>{{hour}}h</p>
     <div>
       <div>
@@ -7,7 +7,7 @@
         <p>{{city.weather[0].main}}</p>
         <p>{{city.weather[0].description}}</p>
       </div>
-      <p>{{city.main.temp}} C</p>
+      <p class="temp">{{city.main.temp}} C</p>
     </div>
   </div>
 </template>
@@ -61,4 +61,10 @@ export default class CityForecast extends Vue {
 </script>
 
 <style scoped>
+.hourly {
+  border: 1px solid rgb(70, 70, 146);
+}
+.temp {
+  color: rgb(224, 99, 99);
+}
 </style>

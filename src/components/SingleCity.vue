@@ -1,13 +1,10 @@
 <template>
   <div class="container">
-    <div>
-      <h1>{{city.name}}</h1>
-      <p>{{currentTime}}h CEST</p>
-    </div>
+    <h1 class="name">{{city.name}}</h1>
 
-    <div>
-      <h1>{{city.main.temp}} °C</h1>
-      <p>{{city.main.temp_min}}°C - {{city.main.temp_max}}°C</p>
+    <div class="temp">
+      <i class="fas fa-thermometer-half fa-2x"></i>
+      <h1>{{temp}} °C</h1>
     </div>
 
     <div>
@@ -16,13 +13,13 @@
       <p>{{city.weather[0].description}}</p>
     </div>
 
-    <div>
+    <div class="sun">
       <p>SUNRISE: {{sunrise}}</p>
       <i class="fas fa-sun fa-2x"></i>
       <p>SUNSET: {{sunset}}</p>
     </div>
 
-    <div>
+    <div class="sun">
       <p>Humidity: {{city.main.humidity}}%</p>
       <p>Pressure: {{city.main.pressure}} hPa</p>
       <p>Wind: {{city.wind.speed}}m/s {{windDirection}}</p>
@@ -46,6 +43,7 @@ export default class CityWeather extends Vue {
   sunrise: string = "";
   sunset: string = "";
   windDirection: string = "";
+  temp: any = null;
 
   @Prop() city!: any;
 
@@ -54,6 +52,7 @@ export default class CityWeather extends Vue {
      */ this.getIcon();
     this.getWindDirection();
     this.sunrise_sunset();
+    this.temp = Math.round(this.city.main.temp);
   }
   beforeUpdate() {
     this.getIcon();
@@ -104,13 +103,20 @@ export default class CityWeather extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .container {
-  /* 
-  display: flex;
-  justify-content: space-between; */
-  margin-top: 20px;
+  margin: 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
+.temp {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.temp h1 {
+  margin-left: 8px;
+}
+
 img {
   width: 55px;
   height: 55px;
@@ -124,5 +130,17 @@ h1 {
 p {
   margin: 3px;
   padding: 5px;
+}
+.name {
+  align-self: center;
+  padding: 0;
+  font-weight: bold;
+  font-size: 42px;
+  margin: auto;
+}
+.sun {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 </style>

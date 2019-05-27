@@ -1,13 +1,17 @@
 <template>
   <div class="hello">
     <div v-if="!!data">
-      <select v-on:change="sort">
-        <option value selected disabled hidden>Sort</option>
-        <option v-on:click="sortHighestTemp" value="1">Low to high</option>
-        <option value="2">High to low</option>
-        <option value="3">Alphabeticly</option>
-      </select>
-      <input v-on:keyup="filter" type="text" placeholder="SEARCH CITIES" v-model="search">
+      <div class="sortFilter">
+        <select class="select" v-on:change="sort">
+          <option value selected disabled hidden>Sort</option>
+          <option value="1">Low to high</option>
+          <option value="2">High to low</option>
+          <option value="3">Alphabeticly</option>
+        </select>
+        <h1>Current Weather</h1>
+        <input v-on:keyup="filter" type="text" placeholder="Filter Cities" v-model="search">
+      </div>
+
       <div
         class="bColor"
         v-for="(city,index) in filter"
@@ -107,10 +111,11 @@ export default class CityWeather extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .bColor {
+  margin: 0;
   background-color: lightblue;
 }
 .backColor {
-  background-color: darkgray;
+  background-color: white;
 }
 h3 {
   margin: 40px 0 0;
@@ -123,7 +128,43 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
+
+.select {
+  background-color: dodgerblue;
+  background: none;
+  color: dodgerblue;
+  font-size: 26px;
+  border: none;
+  border-bottom: 2px solid dodgerblue;
+  width: auto;
+  padding: 10px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+option {
+  background-color: lightblue;
+  font-size: 20px;
+}
+.sortFilter {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 4px solid dodgerblue;
+}
+.sortFilter h1 {
+  color: dodgerblue;
+  padding-left: 70px;
+}
+input {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: none;
+  border: none;
+  font-size: 26px;
+  border-bottom: 2px solid dodgerblue;
+  color: dodgerblue;
+  margin-bottom: 15px;
+}
+input::placeholder {
+  color: dodgerblue;
 }
 </style>

@@ -1,13 +1,22 @@
 <template>
-  <header class="header">
-    <div class="logo">
-      <img alt="Vue logo" src="../assets/logo.png">
-    </div>
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/random">Random</router-link>
-    </div>
-  </header>
+  <div class="parent">
+    <header class="header">
+      <div class="logo">
+        <i class="fas fa-umbrella fa-3x"></i>
+      </div>
+      <div class="middle">
+        <h1>WeatherApp</h1>
+        <div class="nav">
+          <router-link class="link" to="/">Home</router-link>
+          <span>|</span>
+          <router-link class="link" to="/random">Random</router-link>
+        </div>
+      </div>
+      <div class="logo">
+        <i class="fas fa-umbrella fa-3x"></i>
+      </div>
+    </header>
+  </div>
 </template>
 
 <script lang="ts">
@@ -20,15 +29,33 @@ export default class Navbar extends Vue {}
 </script>
 
 <style scoped>
+.parent {
+}
+h1 {
+  margin: 0;
+}
 .header {
   display: flex;
   justify-content: space-between;
-  margin: 10px;
   padding: 10px;
-  background-color: rgb(198, 232, 243);
+  background-color: rgb(36, 163, 206);
+  padding-bottom: 35px;
 }
 img {
   width: 40px;
   height: 40px;
+}
+.link {
+  font-size: 30px;
+}
+.nav {
+  margin-top: 10px;
+}
+.middle h1 {
+  font-size: 54px;
+}
+span {
+  font-size: 30px;
+  padding: 5px;
 }
 </style>
