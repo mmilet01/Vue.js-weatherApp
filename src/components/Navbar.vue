@@ -30,6 +30,7 @@ export default class Navbar extends Vue {}
 
 <style scoped>
 .parent {
+  flex: 0 0 auto;
 }
 h1 {
   margin: 0;
@@ -39,7 +40,8 @@ h1 {
   justify-content: space-between;
   padding: 10px;
   background-color: rgb(36, 163, 206);
-  padding-bottom: 35px;
+  padding-bottom: 25px;
+  flex: 0 0 auto;
 }
 img {
   width: 40px;
@@ -52,7 +54,7 @@ img {
   margin-top: 10px;
 }
 .middle h1 {
-  font-size: 54px;
+  font-size: 48px;
 }
 span {
   font-size: 30px;

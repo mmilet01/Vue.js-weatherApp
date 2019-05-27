@@ -58,6 +58,7 @@ export default class CityWeather extends Vue {
     this.getIcon();
     this.sunrise_sunset();
     this.getWindDirection();
+    this.temp = Math.round(this.city.main.temp);
   }
   sunrise_sunset() {
     this.sunriseUnix = new Date(this.city.sys.sunrise * 1000);

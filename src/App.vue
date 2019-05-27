@@ -1,8 +1,14 @@
 <template>
-  <div id="app">
-    <Navbar/>
-    <router-view/>
-    <Footer/>
+  <div id="app" class="app">
+    <div class="navv">
+      <Navbar/>
+    </div>
+    <div class="view">
+      <router-view/>
+    </div>
+    <div class="footer">
+      <Footer/>
+    </div>
   </div>
 </template>
 
@@ -51,5 +57,22 @@ a {
 
 a.router-link-exact-active {
   color: blue;
+}
+.navv {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  margin: 0;
+}
+.view {
+  height: 100%;
+  position: relative;
+  padding-top: 150px;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+}
+.footer {
 }
 </style>
