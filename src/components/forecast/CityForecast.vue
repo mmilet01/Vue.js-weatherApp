@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <div>{{city.city.name}} - 5 day forecast</div>
-    <hr>
+  <div class="wrapper">
+    <h1>{{city.city.name}} - 5 day forecast</h1>
     <div>
       <div v-for="(day,index) in array2" v-bind:key="index" class="forecast">
         <OneDayForecast
@@ -72,10 +71,12 @@ export default class CityForecast extends Vue {
     for (let i = 0; i < this.city.cnt; i++) {
       let sliced = this.city.list[i].dt_txt.slice(8, 10);
       let intSliced = +sliced;
-      if (i === 0 && sliced != date2) {
+      /* if (i === 0 && sliced != date2) {
         this.array[day].push(this.city.list[i]);
         this.array2.push(this.array[day]);
-      } else if (sliced != date2) {
+      } else */ if (
+        sliced != date2
+      ) {
         if (intSliced == 1) {
           date2 = 0;
         }
@@ -107,6 +108,11 @@ export default class CityForecast extends Vue {
 </script>
 
 <style scoped>
+.wrapper {
+  border: none;
+  border-top: 1px solid blue;
+}
 .forecast {
+  margin-top: 50px;
 }
 </style>

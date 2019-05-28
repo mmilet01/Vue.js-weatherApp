@@ -7,13 +7,13 @@
       <h1>{{temp}} °C</h1>
     </div>
 
-    <div>
+    <div class="weather">
       <img v-bind:src="iconURL">
       <h3>{{city.weather[0].main}}</h3>
       <p>{{city.weather[0].description}}</p>
     </div>
 
-    <div>
+    <div class="description">
       <p>Humidity: {{city.main.humidity}}%</p>
       <p>Pressure: {{city.main.pressure}} hPa</p>
       <p>Wind: {{city.wind.speed}}m/s {{windDirection}}</p>
@@ -85,10 +85,6 @@ export default class CityWeather extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/* .temp p {
-  color: rgb(190, 76, 76);
-}*/
-
 .temp {
   display: flex;
   flex-direction: row;
@@ -129,4 +125,24 @@ p {
   margin: 3px;
   padding: 5px;
 }
+@media only screen and (max-width: 700px) {
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .temp {
+    margin: auto;
+  }
+  .name {
+    margin: auto;
+    margin-right: 10%;
+  }
+  .weather {
+    margin: auto;
+  }
+  .description {
+    margin: auto;
+  }
+}
 </style>
+

@@ -7,7 +7,7 @@
       <h1>{{temp}} °C</h1>
     </div>
 
-    <div>
+    <div class="weather">
       <img v-bind:src="iconURL">
       <h3>{{city.weather[0].main}}</h3>
       <p>{{city.weather[0].description}}</p>
@@ -19,7 +19,7 @@
       <p>SUNSET: {{sunset}}</p>
     </div>
 
-    <div class="sun">
+    <div class="description">
       <p>Humidity: {{city.main.humidity}}%</p>
       <p>Pressure: {{city.main.pressure}} hPa</p>
       <p>Wind: {{city.wind.speed}}m/s {{windDirection}}</p>
@@ -139,9 +139,25 @@ p {
   font-size: 42px;
   margin: auto;
 }
-.sun {
+.sun,
+.description {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+@media only screen and (max-width: 700px) {
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .weather,
+  .name,
+  .description,
+  .temp {
+    margin-right: 5%;
+  }
+  p {
+    font-weight: bold;
+  }
 }
 </style>

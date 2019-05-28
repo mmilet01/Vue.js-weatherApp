@@ -167,4 +167,10 @@ input {
 input::placeholder {
   color: dodgerblue;
 }
+
+@media only screen and (max-width: 700px) {
+  .sortFilter {
+    flex-wrap: wrap;
+  }
+}
 </style>

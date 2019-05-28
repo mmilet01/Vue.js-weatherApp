@@ -60,3 +60,9 @@ export default class Details extends Vue {
   }
 }
 </script>
+
+<style scoped>
+h1 {
+  color: dodgerblue;
+}
+</style>

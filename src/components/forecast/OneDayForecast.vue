@@ -1,12 +1,11 @@
 <template>
   <div>
-    <h3>{{days[day]}}: {{date}}</h3>
+    <h2>{{days[day]}}: {{date}}</h2>
     <div class="forecast">
       <div v-for="city in array" v-bind:key="city.id" class="forecast2">
         <HourlyForecast v-bind:city="city"/>
       </div>
     </div>
-    <hr>
   </div>
 </template>
 
@@ -23,7 +22,7 @@ import HourlyForecast from "@/components/forecast/HourlyForecast.vue";
 export default class Details extends Vue {
   @Prop() array!: any;
   @Prop() day2!: any;
-  @Prop() index!: any;
+  @Prop() index!: Number;
   @Prop() days!: any;
 
   day: number = 0;
@@ -38,18 +37,20 @@ export default class Details extends Vue {
 </script>
 
 <style scoped>
+h2 {
+  color: dodgerblue;
+}
 .forecast {
   display: flex;
-  /*   justify-content: space-around;
- */
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 .forecast2 {
   width: 12.5%;
 }
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 700px) {
   .forecast2 {
-    width: auto;
+    width: 150px;
   }
 }
 </style>

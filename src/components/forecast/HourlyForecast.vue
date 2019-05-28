@@ -1,13 +1,15 @@
 <template>
   <div class="hourly">
     <p>{{hour}}h</p>
-    <div>
-      <div>
-        <img v-bind:src="iconURL">
-        <p>{{city.weather[0].main}}</p>
+    <div class="weather">
+      <div class="desc">
+        <div>
+          <img v-bind:src="iconURL">
+        </div>
+        <h3>{{city.weather[0].main}}</h3>
         <p>{{city.weather[0].description}}</p>
       </div>
-      <p class="temp">{{city.main.temp}} C</p>
+      <p class="temp">{{temp}} °C</p>
     </div>
   </div>
 </template>
@@ -24,11 +26,13 @@ export default class CityForecast extends Vue {
   iconURL: String = "";
   windDirection: String = "";
   hour: String = "";
+  temp: any = null;
 
   created() {
     /*     console.log(this.city);
      */ this.getIcon();
     this.getWindDirection();
+    this.temp = Math.round(this.city.main.temp);
   }
 
   getIcon() {
@@ -62,9 +66,18 @@ export default class CityForecast extends Vue {
 
 <style scoped>
 .hourly {
-  border: 1px solid rgb(70, 70, 146);
+  border: 1px solid dodgerblue;
 }
 .temp {
   color: rgb(224, 99, 99);
+}
+.weather {
+  display: flex;
+  flex-direction: column;
+}
+.desc {
+  display: flex;
+  flex-direction: column;
+  height: 160px;
 }
 </style>
