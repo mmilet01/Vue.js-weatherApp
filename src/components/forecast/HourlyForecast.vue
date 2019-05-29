@@ -1,65 +1,43 @@
 <template>
   <div class="hourly">
-    <p>{{hour}}h</p>
+    <p>{{forecast.hour}}h</p>
     <div class="weather">
       <div class="desc">
         <div>
-          <img v-bind:src="iconURL">
+          <img v-bind:src="forecast.icon">
         </div>
-        <h3>{{city.weather[0].main}}</h3>
-        <p>{{city.weather[0].description}}</p>
+        <h3>{{forecast.description}}</h3>
+        <p>{{forecast.details}}</p>
       </div>
-      <p class="temp">{{temp}} °C</p>
+      <p class="temp">{{forecast.temperature}} °C</p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { ForecastInterface } from "../../ForecastInterface";
 
 @Component({
   //all compoennt options are allowed in here
 })
 export default class CityForecast extends Vue {
+  forecast: ForecastInterface = {};
+
   @Prop() city!: any;
 
-  iconURL: String = "";
-  windDirection: String = "";
-  hour: String = "";
-  temp: any = null;
-
   created() {
-    /*     console.log(this.city);
-     */ this.getIcon();
-    this.getWindDirection();
-    this.temp = Math.round(this.city.main.temp);
+    this.prepareData();
   }
-
-  getIcon() {
-    this.iconURL = `http://openweathermap.org/img/w/${
+  prepareData() {
+    this.forecast.icon = `http://openweathermap.org/img/w/${
       this.city.weather[0].icon
     }.png`;
-    this.hour = this.city.dt_txt.slice(11);
-  }
-  getWindDirection() {
-    let deg: number = this.city.wind.deg;
-    if (deg >= 22.5 && deg <= 67.5) {
-      this.windDirection = "NE";
-    } else if (deg >= 67.5 && deg <= 112.5) {
-      this.windDirection = "N";
-    } else if (deg >= 112.5 && deg <= 157.5) {
-      this.windDirection = "NW";
-    } else if (deg >= 157.5 && deg <= 202.5) {
-      this.windDirection = "W";
-    } else if (deg >= 202.5 && deg <= 247.5) {
-      this.windDirection = "SW";
-    } else if (deg >= 247.5 && deg <= 292.5) {
-      this.windDirection = "S";
-    } else if (deg >= 292.5 && deg <= 337.5) {
-      this.windDirection = "SE";
-    } else {
-      this.windDirection = "E";
-    }
+
+    this.forecast.hour = this.city.dt_txt.slice(11);
+    this.forecast.temperature = Math.round(this.city.main.temp);
+    this.forecast.description = this.city.weather[0].main;
+    this.forecast.details = this.city.weather[0].description;
   }
 }
 </script>

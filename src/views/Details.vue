@@ -41,7 +41,6 @@ export default class Details extends Vue {
       )
       .then(res => {
         this.city = res.data;
-        console.log(this.city);
       })
       .catch(err => console.log("Errors", err));
 

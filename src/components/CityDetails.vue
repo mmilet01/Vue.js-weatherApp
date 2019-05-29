@@ -1,22 +1,22 @@
 <template>
   <div class="container">
-    <h1 class="name">{{city.name}}</h1>
+    <h1 class="name">{{weather.name}}</h1>
 
     <div class="temp">
       <i class="fas fa-thermometer-half fa-2x"></i>
-      <h1>{{temp}} °C</h1>
+      <h1>{{weather.temperature}} °C</h1>
     </div>
 
     <div class="weather">
-      <img v-bind:src="iconURL">
-      <h3>{{city.weather[0].main}}</h3>
-      <p>{{city.weather[0].description}}</p>
+      <img v-bind:src="weather.icon">
+      <h3>{{weather.description}}</h3>
+      <p>{{weather.details}}</p>
     </div>
 
     <div class="description">
-      <p>Humidity: {{city.main.humidity}}%</p>
-      <p>Pressure: {{city.main.pressure}} hPa</p>
-      <p>Wind: {{city.wind.speed}}m/s {{windDirection}}</p>
+      <p>Humidity: {{weather.humidity}}%</p>
+      <p>Pressure: {{weather.pressure}} hPa</p>
+      <p>Wind: {{weather.wind_speed}}m/s {{weather.windDirection}}</p>
       <button class="link">
         <router-link class="link" v-bind:to="routeURL">Forecast</router-link>
       </button>
@@ -26,55 +26,61 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { WeatherInterface } from "../WeatherDataInterface";
 
 @Component({
   //all compoennt options are allowed in here
 })
 export default class CityWeather extends Vue {
   //data + methods
-  today: Date = new Date();
-  currentTime: any = this.today.getHours() + ":" + this.today.getMinutes();
-  iconURL: string = "";
-  windDirection: string = "";
+  weather: WeatherInterface = {};
   routeURL: string = "";
-  temp: any = null;
 
   @Prop() city!: any;
 
   created() {
-    console.log(this.city);
+    this.routeURL = "/city/" + this.city.id;
+    this.prepareData();
     this.getIcon();
     this.getWindDirection();
-    this.routeURL = "/city/" + this.city.id;
-    this.temp = Math.round(this.city.main.temp);
   }
+  prepareData() {
+    this.weather.temperature = Math.round(this.city.main.temp);
+    this.weather.wind_speed = this.city.wind.speed;
+    this.weather.details = this.city.weather[0].description;
+    this.weather.humidity = this.city.main.pressure;
+    this.weather.pressure = this.city.main.humidity;
+    this.weather.description = this.city.weather[0].main;
+    this.weather.name = this.city.name;
+  }
+
   beforeUpdate() {
     this.getIcon();
     this.getWindDirection();
   }
   getIcon() {
-    this.iconURL = `http://openweathermap.org/img/w/${
+    this.weather.icon = `http://openweathermap.org/img/w/${
       this.city.weather[0].icon
     }.png`;
   }
   getWindDirection() {
     let deg: number = this.city.wind.deg;
     if (deg >= 22.5 && deg <= 67.5) {
-      this.windDirection = "NE";
+      this.weather.wind_direction = "NE";
     } else if (deg >= 67.5 && deg <= 112.5) {
-      this.windDirection = "N";
+      this.weather.wind_direction = "N";
     } else if (deg >= 112.5 && deg <= 157.5) {
-      this.windDirection = "NW";
+      this.weather.wind_direction = "NW";
     } else if (deg >= 157.5 && deg <= 202.5) {
-      this.windDirection = "W";
+      this.weather.wind_direction = "W";
     } else if (deg >= 202.5 && deg <= 247.5) {
-      this.windDirection = "SW";
+      this.weather.wind_direction = "SW";
     } else if (deg >= 247.5 && deg <= 292.5) {
-      this.windDirection = "S";
+      this.weather.wind_direction = "S";
     } else if (deg >= 292.5 && deg <= 337.5) {
-      this.windDirection = "SE";
+      this.weather.wind_direction = "SE";
     } else {
-      this.windDirection = "E";
+      this.weather.wind_direction = "E";
     }
   }
 }

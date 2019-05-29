@@ -14,7 +14,14 @@
     </div>
   </footer>
 </template>
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
 
+@Component({
+  //all compoennt options are allowed in here
+})
+export default class Navbar extends Vue {}
+</script>
 
 <style scoped>
 footer {
@@ -25,7 +32,7 @@ footer {
   justify-content: space-around;
 }
 input {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
   background: none;
   border: none;
   font-size: 26px;

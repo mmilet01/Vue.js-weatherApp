@@ -45,7 +45,6 @@ export default class CityWeather extends Vue {
   url: string = `http://api.openweathermap.org/data/2.5/find?lat=45.1&lon=15.20&cnt=10&units=metric&APPID=${
     constants.API_KEY
   }`;
-  @Prop() private msg!: string;
 
   created() {
     this.fetchingData();
@@ -61,7 +60,6 @@ export default class CityWeather extends Vue {
     }
   }
   get filter() {
-    console.log(this.data.list);
     return this.data.list.filter((city: any) =>
       city.name.toUpperCase().includes(this.search.toUpperCase())
     );
@@ -72,8 +70,6 @@ export default class CityWeather extends Vue {
       .get(this.url)
       .then(res => {
         this.data = res.data;
-        console.log(this.data.list);
-        console.log(!!this.data);
       })
       .catch(err => {
         console.log("Errors");

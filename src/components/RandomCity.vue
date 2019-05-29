@@ -7,7 +7,7 @@
       </h1>
     </div>
     <div v-if="city">
-      <SingleCity v-bind:city="city"/>
+      <SingleCity v-bind:city="city" :key="componentKey"/>
     </div>
     <div class="right">
       <h1>Not the city you want?</h1>
@@ -34,16 +34,14 @@ console.log(cities[500]);
 })
 export default class RandomCity extends Vue {
   city: any = null;
-
+  componentKey: number = 0;
   created() {
     this.randomCity();
   }
 
   randomCity() {
     const key = constants.API_KEY;
-    console.log(key);
     let number = Math.floor(Math.random() * cities.length + 1);
-    console.log(number);
     let cityID: number = cities[number].id;
     axios
       .get(
@@ -51,6 +49,7 @@ export default class RandomCity extends Vue {
       )
       .then(res => {
         this.city = res.data;
+        this.componentKey += 1;
       })
       .catch(err => console.log("Errors", err));
   }

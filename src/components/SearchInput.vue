@@ -4,10 +4,9 @@
       <input type="text" placeholder="Search Cities" v-model="city" class="input">
       <input type="submit" class="button" value="Search">
     </form>
-    <!--     <button v-on:click="getCity">Search</button>
-    -->
+
     <div v-if="!!cityData">
-      <SingleCity v-bind:city="cityData"/>
+      <SingleCity v-bind:city="cityData" :key="componentKey"/>
     </div>
   </div>
 </template>
@@ -27,6 +26,7 @@ import SingleCity from "@/components/SingleCity.vue";
 export default class SearchInput extends Vue {
   city: string = "";
   cityData: any = null;
+  componentKey: number = 0;
 
   getCity() {
     axios
@@ -38,6 +38,7 @@ export default class SearchInput extends Vue {
       .then(res => {
         this.cityData = res.data;
         this.city = "";
+        this.componentKey += 1;
       })
       .catch(err => {
         alert(`There is no city with a name: ${this.city}`);

@@ -64,8 +64,7 @@ export default class CityForecast extends Vue {
   day2: number = new Date().getDay();
 
   created() {
-    let day = new Date().getDay();
-    console.log(day); // number of the day
+    let day = new Date().getDay(); // number of the day
     let date2 = new Date().getDate();
 
     for (let i = 0; i < this.city.cnt; i++) {
@@ -101,7 +100,6 @@ export default class CityForecast extends Vue {
         this.day2 = 0;
       }
     }
-    console.log(this.day2);
     //DAY2 - prvi za pokazat vremensku prognozu
   }
 }

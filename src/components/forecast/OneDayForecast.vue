@@ -30,7 +30,6 @@ export default class Details extends Vue {
 
   created() {
     this.day = this.day2 + this.index;
-    console.log(this.array);
     this.date = this.array[0].dt_txt.slice(5, 10);
   }
 }
