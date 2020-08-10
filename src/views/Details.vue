@@ -3,10 +3,10 @@
     <h1>Current weather</h1>
 
     <div v-if="!!city2">
-      <SingleCity v-bind:city="city2"/>
+      <SingleCity v-bind:city="city2" />
     </div>
     <div v-if="!!city">
-      <CityForecast v-bind:city="city"/>
+      <CityForecast v-bind:city="city" />
     </div>
   </div>
 </template>
@@ -19,7 +19,6 @@ import CityForecast from "@/components/forecast/CityForecast.vue";
 const constants = require("../assets/constants.json");
 
 @Component({
-  //all compoennt options are allowed in here
   components: {
     SingleCity,
     CityForecast
@@ -35,25 +34,23 @@ export default class Details extends Vue {
 
     axios
       .get(
-        `http://api.openweathermap.org/data/2.5/forecast?id=${id}&units=metric&APPID=${
-          this.key
-        }`
+        `http://api.openweathermap.org/data/2.5/forecast?id=${id}&units=metric&APPID=${this.key}`
       )
       .then(res => {
+        console.log("details result", res);
         this.city = res.data;
       })
       .catch(err => console.log("Errors", err));
 
     axios
       .get(
-        `http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=${
-          this.key
-        }`
+        `http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=${this.key}`
       )
       .then(res => {
+        console.log("details result2", res);
         this.city2 = res.data;
-        /*         console.log(this.city2);
-         */
+                console.log(this.city2);
+        
       })
       .catch(err => console.log("Errors", err));
   }

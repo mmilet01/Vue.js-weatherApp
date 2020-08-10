@@ -4,7 +4,7 @@
     <div class="weather">
       <div class="desc">
         <div>
-          <img v-bind:src="forecast.icon">
+          <img v-bind:src="forecast.icon" />
         </div>
         <h3>{{forecast.description}}</h3>
         <p>{{forecast.details}}</p>
@@ -16,13 +16,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { ForecastInterface } from "../../ForecastInterface";
+import { Forecast } from "../../Interfaces/ForecastInterface";
 
-@Component({
-  //all compoennt options are allowed in here
-})
+@Component({})
 export default class CityForecast extends Vue {
-  forecast: ForecastInterface = {};
+  forecast: Forecast = {} as any;
 
   @Prop() city!: any;
 
@@ -30,10 +28,7 @@ export default class CityForecast extends Vue {
     this.prepareData();
   }
   prepareData() {
-    this.forecast.icon = `http://openweathermap.org/img/w/${
-      this.city.weather[0].icon
-    }.png`;
-
+    this.forecast.icon = `http://openweathermap.org/img/w/${this.city.weather[0].icon}.png`;
     this.forecast.hour = this.city.dt_txt.slice(11);
     this.forecast.temperature = Math.round(this.city.main.temp);
     this.forecast.description = this.city.weather[0].main;

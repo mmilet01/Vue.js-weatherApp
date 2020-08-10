@@ -1,5 +1,5 @@
 require("babel-register")({
-  presets: ["babel-preset-es2016", "babel-preset-vue"]
+  presets: ["babel-preset-es2016", "babel-preset-vue"],
 });
 
 const router = require("./sitemapRoutes.ts").default;

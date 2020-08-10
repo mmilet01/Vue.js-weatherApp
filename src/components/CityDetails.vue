@@ -1,22 +1,22 @@
 <template>
-  <div class="container">
-    <h1 class="name">{{weather.name}}</h1>
+  <div class="container" v-if="!!cityWeather">
+    <h1 class="name">{{cityWeather.name}}</h1>
 
     <div class="temp">
       <i class="fas fa-thermometer-half fa-2x"></i>
-      <h1>{{weather.temperature}} °C</h1>
+      <h1>{{cityWeather.temperature}} °C</h1>
     </div>
 
     <div class="weather">
-      <img v-bind:src="weather.icon">
-      <h3>{{weather.description}}</h3>
-      <p>{{weather.details}}</p>
+      <img v-bind:src="cityWeather.icon" />
+      <h3>{{cityWeather.description}}</h3>
+      <p>{{cityWeather.details}}</p>
     </div>
 
     <div class="description">
-      <p>Humidity: {{weather.humidity}}%</p>
-      <p>Pressure: {{weather.pressure}} hPa</p>
-      <p>Wind: {{weather.wind_speed}}m/s {{weather.windDirection}}</p>
+      <p>Humidity: {{cityWeather.humidity}}%</p>
+      <p>Pressure: {{cityWeather.pressure}} hPa</p>
+      <p>Wind: {{cityWeather.wind_speed}}m/s {{cityWeather.windDirection}}</p>
       <button class="link">
         <router-link class="link" v-bind:to="routeURL">Forecast</router-link>
       </button>
@@ -26,70 +26,20 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { WeatherInterface } from "../WeatherDataInterface";
+import { Weather } from "../Interfaces/WeatherInterface";
 
-@Component({
-  //all compoennt options are allowed in here
-})
+@Component({})
 export default class CityWeather extends Vue {
-  //data + methods
-  weather: WeatherInterface = {};
-  routeURL: string = "";
+  routeURL: string;
 
-  @Prop() city!: any;
+  @Prop() cityWeather: Weather;
 
   created() {
-    this.routeURL = "/city/" + this.city.id;
-    this.prepareData();
-    this.getIcon();
-    this.getWindDirection();
-  }
-  prepareData() {
-    this.weather.temperature = Math.round(this.city.main.temp);
-    this.weather.wind_speed = this.city.wind.speed;
-    this.weather.details = this.city.weather[0].description;
-    this.weather.humidity = this.city.main.pressure;
-    this.weather.pressure = this.city.main.humidity;
-    this.weather.description = this.city.weather[0].main;
-    this.weather.name = this.city.name;
-  }
-
-  beforeUpdate() {
-    this.getIcon();
-    this.getWindDirection();
-  }
-  getIcon() {
-    this.weather.icon = `http://openweathermap.org/img/w/${
-      this.city.weather[0].icon
-    }.png`;
-  }
-  getWindDirection() {
-    let deg: number = this.city.wind.deg;
-    if (deg >= 22.5 && deg <= 67.5) {
-      this.weather.wind_direction = "NE";
-    } else if (deg >= 67.5 && deg <= 112.5) {
-      this.weather.wind_direction = "N";
-    } else if (deg >= 112.5 && deg <= 157.5) {
-      this.weather.wind_direction = "NW";
-    } else if (deg >= 157.5 && deg <= 202.5) {
-      this.weather.wind_direction = "W";
-    } else if (deg >= 202.5 && deg <= 247.5) {
-      this.weather.wind_direction = "SW";
-    } else if (deg >= 247.5 && deg <= 292.5) {
-      this.weather.wind_direction = "S";
-    } else if (deg >= 292.5 && deg <= 337.5) {
-      this.weather.wind_direction = "SE";
-    } else {
-      this.weather.wind_direction = "E";
-    }
+    this.routeURL = "/city/" + this.cityWeather.id;
   }
 }
 </script>
 
-
-
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .temp {
   display: flex;

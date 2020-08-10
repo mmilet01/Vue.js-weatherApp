@@ -7,11 +7,11 @@
       </h1>
     </div>
     <div v-if="city">
-      <SingleCity v-bind:city="city" :key="componentKey"/>
+      <SingleCity v-bind:city="city" :key="componentKey" />
     </div>
     <div class="right">
       <h1>Not the city you want?</h1>
-      <SearchInput/>
+      <SearchInput />
     </div>
   </div>
 </template>
@@ -23,8 +23,8 @@ import SearchInput from "@/components/SearchInput.vue";
 let cities: Array<any> = require("../assets/city.list.json");
 const constants = require("../assets/constants.json");
 import axios from "axios";
-console.log(cities);
-console.log(cities[500]);
+/* console.log(cities);
+console.log(cities[500]); */
 @Component({
   //all compoennt options are allowed in here
   components: {
@@ -48,6 +48,7 @@ export default class RandomCity extends Vue {
         `http://api.openweathermap.org/data/2.5/weather?id=${cityID}&units=metric&APPID=${key}`
       )
       .then(res => {
+        console.log("inside randomcity", res);
         this.city = res.data;
         this.componentKey += 1;
       })

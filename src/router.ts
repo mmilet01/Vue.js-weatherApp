@@ -9,7 +9,7 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: Home
+      component: Home,
     },
     {
       path: "/random",
@@ -18,12 +18,12 @@ export default new Router({
       // this generates a separate chunk (random.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "random" */ "./views/Random.vue")
+        import(/* webpackChunkName: "random" */ "./views/Random.vue"),
     },
     {
       path: "/city/:id",
       name: "details",
-      component: () => import("./views/Details.vue")
-    }
-  ]
+      component: () => import("./views/Details.vue"),
+    },
+  ],
 });

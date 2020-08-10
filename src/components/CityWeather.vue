@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div v-if="!!data">
+    <div v-if="!!weather">
       <div class="sortFilter">
         <select class="select" v-on:change="sort">
           <option value selected disabled hidden>Sort</option>
@@ -9,7 +9,7 @@
           <option value="3">Alphabeticly</option>
         </select>
         <h1>Current Weather</h1>
-        <input v-on:keyup="filter" type="text" placeholder="Filter Cities" v-model="search">
+        <input v-on:keyup="filter" type="text" placeholder="Filter Cities" v-model="search" />
       </div>
 
       <div
@@ -18,7 +18,7 @@
         v-bind:class="{'backColor': index % 2 === 0}"
         v-bind:key="city.id"
       >
-        <CityDetails v-bind:city="city"/>
+        <CityDetails v-bind:cityWeather="city" />
       </div>
     </div>
     <div v-else>Loading....</div>
@@ -29,26 +29,17 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 import CityDetails from "@/components/CityDetails.vue";
+import { Weather } from "@/Interfaces/WeatherInterface";
 const constants = require("../assets/constants.json");
-console.log(constants);
 
 @Component({
-  //all compoennt options are allowed in here
   components: {
     CityDetails
   }
 })
 export default class CityWeather extends Vue {
-  //data + methods
-  data: any = null;
   search: string = "";
-  url: string = `http://api.openweathermap.org/data/2.5/find?lat=45.1&lon=15.20&cnt=10&units=metric&APPID=${
-    constants.API_KEY
-  }`;
-
-  created() {
-    this.fetchingData();
-  }
+  @Prop() weather: Weather[];
 
   sort(e: any) {
     if (+e.target.value === 1) {
@@ -60,35 +51,25 @@ export default class CityWeather extends Vue {
     }
   }
   get filter() {
-    return this.data.list.filter((city: any) =>
+    return this.weather.filter((city: Weather) =>
       city.name.toUpperCase().includes(this.search.toUpperCase())
     );
   }
 
-  fetchingData() {
-    axios
-      .get(this.url)
-      .then(res => {
-        this.data = res.data;
-      })
-      .catch(err => {
-        console.log("Errors");
-        console.log(err);
-      });
+  sortHighestTemp() {
+    this.weather.sort((a: Weather, b: Weather) => {
+      return a.temperature - b.temperature;
+    });
   }
 
-  sortHighestTemp() {
-    this.data.list.sort((a: any, b: any) => {
-      return a.main.temp - b.main.temp;
-    });
-  }
   sortLowestTemp() {
-    this.data.list.sort((a: any, b: any) => {
-      return b.main.temp - a.main.temp;
+    this.weather.sort((a: Weather, b: Weather) => {
+      return b.temperature - a.temperature;
     });
   }
+
   sortAlpha() {
-    this.data.list.sort((a: any, b: any) => {
+    this.weather.sort((a: Weather, b: Weather) => {
       if (a.name < b.name) {
         return -1;
       }
@@ -100,9 +81,6 @@ export default class CityWeather extends Vue {
   }
 }
 </script>
-
-
-
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

@@ -18,7 +18,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({
-  //all compoennt options are allowed in here
+  //all component options are allowed in here
 })
 export default class Navbar extends Vue {}
 </script>
