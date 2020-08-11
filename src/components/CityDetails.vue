@@ -26,13 +26,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Weather } from "../Interfaces/WeatherInterface";
+import { IWeather } from "../Interfaces/WeatherInterface";
 
 @Component({})
 export default class CityWeather extends Vue {
   routeURL: string;
 
-  @Prop() cityWeather: Weather;
+  @Prop() cityWeather: IWeather;
 
   created() {
     this.routeURL = "/city/" + this.cityWeather.id;

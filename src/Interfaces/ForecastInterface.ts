@@ -1,4 +1,4 @@
-export interface Forecast {
+export interface IForecast {
   temperature: number;
   icon: string;
   description: string;

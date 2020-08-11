@@ -29,7 +29,8 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 import CityDetails from "@/components/CityDetails.vue";
-import { Weather } from "@/Interfaces/WeatherInterface";
+import { IWeather } from "@/Interfaces/WeatherInterface";
+import { SortOptions } from "../Enums/Enums";
 const constants = require("../assets/constants.json");
 
 @Component({
@@ -39,37 +40,42 @@ const constants = require("../assets/constants.json");
 })
 export default class CityWeather extends Vue {
   search: string = "";
-  @Prop() weather: Weather[];
+  @Prop() weather: IWeather[];
 
   sort(e: any) {
-    if (+e.target.value === 1) {
-      this.sortHighestTemp();
-    } else if (+e.target.value === 2) {
-      this.sortLowestTemp();
-    } else {
-      this.sortAlpha();
+    switch (+e.target.value) {
+      case SortOptions.HighestTemp:
+        this.sortHighestTemp();
+        break;
+      case SortOptions.LowestTemp:
+        this.sortLowestTemp();
+        break;
+
+      default:
+        this.sortAlpha();
+        break;
     }
   }
   get filter() {
-    return this.weather.filter((city: Weather) =>
+    return this.weather.filter((city: IWeather) =>
       city.name.toUpperCase().includes(this.search.toUpperCase())
     );
   }
 
   sortHighestTemp() {
-    this.weather.sort((a: Weather, b: Weather) => {
+    this.weather.sort((a: IWeather, b: IWeather) => {
       return a.temperature - b.temperature;
     });
   }
 
   sortLowestTemp() {
-    this.weather.sort((a: Weather, b: Weather) => {
+    this.weather.sort((a: IWeather, b: IWeather) => {
       return b.temperature - a.temperature;
     });
   }
 
   sortAlpha() {
-    this.weather.sort((a: Weather, b: Weather) => {
+    this.weather.sort((a: IWeather, b: IWeather) => {
       if (a.name < b.name) {
         return -1;
       }

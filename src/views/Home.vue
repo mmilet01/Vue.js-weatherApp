@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="home">
     <CityWeather v-bind:weather="weather" msg="Welcome to Your Vue.js + TypeScript App" />
