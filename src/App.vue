@@ -1,13 +1,13 @@
 <template>
   <div id="app" class="app">
     <div class="navv">
-      <Navbar/>
+      <Navbar />
     </div>
     <div class="view">
-      <router-view/>
+      <router-view />
     </div>
     <div class="footer">
-      <Footer/>
+      <Footer />
     </div>
   </div>
 </template>
@@ -20,11 +20,10 @@ import Footer from "@/components/Footer.vue";
 export default Vue.extend({
   components: {
     Navbar,
-    Footer
-  }
+    Footer,
+  },
 });
 </script>
-
 
 <style>
 #app {

@@ -1,8 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
-
+const Loading = require("vue-loading-overlay");
 Vue.use(Router);
+Vue.use(Loading);
 
 export default new Router({
   routes: [

@@ -5,11 +5,11 @@ export enum SortOptions {
 }
 
 export enum WeekDays {
+  Sunday,
   Monday,
   Tuesday,
-  Wednseday,
+  Wednesday,
   Thursday,
   Friday,
   Saturday,
-  Sunday,
 }

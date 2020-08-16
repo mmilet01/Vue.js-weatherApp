@@ -16,11 +16,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Forecast } from "../../Interfaces/ForecastInterface";
+import { IForecast } from "../../Interfaces/ForecastInterface";
 
 @Component({})
 export default class CityForecast extends Vue {
-  forecast: Forecast = {} as any;
+  forecast: IForecast = {} as any;
 
   @Prop() city!: any;
 
@@ -28,11 +28,11 @@ export default class CityForecast extends Vue {
     this.prepareData();
   }
   prepareData() {
-    this.forecast.icon = `http://openweathermap.org/img/w/${this.city.weather[0].icon}.png`;
-    this.forecast.hour = this.city.dt_txt.slice(11);
-    this.forecast.temperature = Math.round(this.city.main.temp);
-    this.forecast.description = this.city.weather[0].main;
-    this.forecast.details = this.city.weather[0].description;
+    this.forecast.icon = this.city.icon;
+    this.forecast.hour = this.city.hour;
+    this.forecast.temperature = this.city.temperature;
+    this.forecast.description = this.city.description;
+    this.forecast.details = this.city.details;
   }
 }
 </script>

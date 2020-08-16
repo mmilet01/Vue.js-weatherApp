@@ -24,19 +24,24 @@
       <p>Pressure: {{weather.pressure}} hPa</p>
       <p>Wind: {{weather.wind_speed}}m/s {{weather.wind_direction}}</p>
     </div>
+
+    <button class="link">
+      <router-link class="link" v-bind:to="routeURL">Forecast</router-link>
+    </button>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { Weather } from "../Interfaces/WeatherInterface";
+// CURRENTLY IRRELEVANT COMPONENT, NOT USED -> CODE REFACTORING
 
-@Component({
-  //all component options are allowed in here
-})
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { IWeather } from "../Interfaces/WeatherInterface";
+
+@Component({})
 export default class CityWeather extends Vue {
   //data + methods
-  weather: Weather;
+  weather: IWeather;
+  routeURL: string;
 
   @Prop() city!: any;
 
@@ -55,7 +60,8 @@ export default class CityWeather extends Vue {
   }
 
   prepareData() {
-    let data: Weather = {
+    let data: IWeather = {
+      id: this.city.id,
       temperature: Math.round(this.city.main.temp),
       wind_speed: this.city.wind.speed,
       details: this.city.weather[0].description,
@@ -66,9 +72,10 @@ export default class CityWeather extends Vue {
       icon: `http://openweathermap.org/img/w/${this.city.weather[0].icon}.png`,
       wind_direction: "Not known",
       sunrise: "",
-      sunset: ""
+      sunset: "",
     };
     this.weather = { ...data };
+    this.routeURL = "/city/" + this.weather.id;
 
     this.getIcon();
     this.getWindDirection();

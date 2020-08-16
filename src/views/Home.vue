@@ -9,62 +9,37 @@ import { Component, Vue } from "vue-property-decorator";
 import CityWeather from "@/components/CityWeather.vue"; // @ is an alias to /src
 import SearchInput from "@/components/SearchInput.vue";
 import axios from "axios";
-import { Weather } from "@/Interfaces/WeatherInterface";
+import { IWeather } from "@/Interfaces/WeatherInterface";
+/* import Loading from "vue-loading-overlay";
+ */ const Loading = require("vue-loading-overlay");
+import "vue-loading-overlay/dist/vue-loading.css";
 const constants = require("../assets/constants.json");
+import requests from "../api/requests";
 
 @Component({
   components: {
     CityWeather,
-    SearchInput
-  }
+    SearchInput,
+  },
 })
 export default class Home extends Vue {
-  url: string = `http://api.openweathermap.org/data/2.5/find?lat=45.1&lon=15.20&cnt=10&units=metric&APPID=${constants.API_KEY}`;
-  weather: Weather[] = [];
+  weather: IWeather[] = [];
 
   created() {
-    axios
-      .get(this.url)
-      .then(res => {
-        res.data.list.forEach((city: any) => {
-          let cityWeather: Weather = {
-            id: city.id,
-            temperature: Math.round(city.main.temp),
-            wind_speed: city.wind.speed,
-            details: city.weather[0].description,
-            humidity: city.main.pressure,
-            pressure: city.main.humidity,
-            description: city.weather[0].main,
-            name: city.name,
-            icon: `http://openweathermap.org/img/w/${city.weather[0].icon}.png`,
-            wind_direction: this.getWindDirection(city.wind.deg)
-          };
-          this.weather.push(cityWeather);
-        });
-      })
-      .catch(err => {
-        console.log("Errors", err);
-      });
-  }
+    /* let loader = this.$loading.show({
+      // Optional parameters
+      container: this.fullPage ? null : this.$refs.formContainer,
+      canCancel: true,
+      onCancel: this.onCancel,
+    }); */
 
-  getWindDirection(windDeg: number) {
-    if (windDeg >= 22.5 && windDeg <= 67.5) {
-      return "NE";
-    } else if (windDeg >= 67.5 && windDeg <= 112.5) {
-      return "N";
-    } else if (windDeg >= 112.5 && windDeg <= 157.5) {
-      return "NW";
-    } else if (windDeg >= 157.5 && windDeg <= 202.5) {
-      return "W";
-    } else if (windDeg >= 202.5 && windDeg <= 247.5) {
-      return "SW";
-    } else if (windDeg >= 247.5 && windDeg <= 292.5) {
-      return "S";
-    } else if (windDeg >= 292.5 && windDeg <= 337.5) {
-      return "SE";
-    } else {
-      return "E";
-    }
+    requests.Weather.list()
+      .then((res: IWeather[]) => {
+        this.weather = res;
+      })
+      .catch((err) => {
+        alert("Errors");
+      });
   }
 }
 </script>

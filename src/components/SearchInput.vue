@@ -1,12 +1,12 @@
 <template>
   <div>
     <form v-on:submit.prevent="getCity">
-      <input type="text" placeholder="Search Cities" v-model="city" class="input">
-      <input type="submit" class="button" value="Search">
+      <input type="text" placeholder="Search Cities" v-model="city" class="input" />
+      <input type="submit" class="button" value="Search" />
     </form>
 
     <div v-if="!!cityData">
-      <SingleCity v-bind:city="cityData" :key="componentKey"/>
+      <CityDetails v-bind:cityWeather="cityData" />
     </div>
   </div>
 </template>
@@ -16,12 +16,14 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 const constants = require("../assets/constants.json");
 import axios from "axios";
 import SingleCity from "@/components/SingleCity.vue";
+import CityDetails from "@/components/CityDetails.vue";
+import { IWeather } from "@/Interfaces/WeatherInterface";
 
 @Component({
-  //all compoennt options are allowed in here
   components: {
-    SingleCity
-  }
+    SingleCity,
+    CityDetails,
+  },
 })
 export default class SearchInput extends Vue {
   city: string = "";
@@ -31,20 +33,49 @@ export default class SearchInput extends Vue {
   getCity() {
     axios
       .get(
-        `http://api.openweathermap.org/data/2.5/weather?q=${
-          this.city
-        }&units=metric&APPID=${constants.API_KEY}`
+        `http://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&APPID=${constants.API_KEY}`
       )
-      .then(res => {
-        this.cityData = res.data;
+      .then((res) => {
+        let cityWeather: IWeather = {
+          id: res.data.id,
+          temperature: Math.round(res.data.main.temp),
+          wind_speed: res.data.wind.speed,
+          details: res.data.weather[0].description,
+          humidity: res.data.main.pressure,
+          pressure: res.data.main.humidity,
+          description: res.data.weather[0].main,
+          name: res.data.name,
+          icon: `http://openweathermap.org/img/w/${res.data.weather[0].icon}.png`,
+          wind_direction: this.getWindDirection(res.data.wind.deg),
+        };
+        this.cityData = cityWeather;
         this.city = "";
         this.componentKey += 1;
       })
-      .catch(err => {
+      .catch((err) => {
         alert(`There is no city with a name: ${this.city}`);
         console.log("Errors", err);
         this.city = "";
       });
+  }
+  getWindDirection(windDeg: number) {
+    if (windDeg >= 22.5 && windDeg <= 67.5) {
+      return "NE";
+    } else if (windDeg >= 67.5 && windDeg <= 112.5) {
+      return "N";
+    } else if (windDeg >= 112.5 && windDeg <= 157.5) {
+      return "NW";
+    } else if (windDeg >= 157.5 && windDeg <= 202.5) {
+      return "W";
+    } else if (windDeg >= 202.5 && windDeg <= 247.5) {
+      return "SW";
+    } else if (windDeg >= 247.5 && windDeg <= 292.5) {
+      return "S";
+    } else if (windDeg >= 292.5 && windDeg <= 337.5) {
+      return "SE";
+    } else {
+      return "E";
+    }
   }
 }
 </script>
