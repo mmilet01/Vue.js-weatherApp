@@ -6,7 +6,7 @@
         <button v-on:click="randomCity">Random</button> city
       </h1>
     </div>
-    <div v-if="city">
+    <div v-if="!!city">
       <CityDetails v-bind:cityWeather="city" />
     </div>
     <div class="right">
@@ -26,6 +26,7 @@ let cities: Array<any> = require("../assets/city.list.json");
 const constants = require("../assets/constants.json");
 import axios from "axios";
 import { IWeather } from "@/Interfaces/WeatherInterface";
+import requests from "../api/requests";
 
 @Component({
   components: {
@@ -34,17 +35,23 @@ import { IWeather } from "@/Interfaces/WeatherInterface";
   },
 })
 export default class Random extends Vue {
-  city: any = null;
+  city: IWeather | null = null;
   componentKey: number = 0;
   created() {
     this.randomCity();
   }
 
   randomCity() {
-    const key = constants.API_KEY;
     let number = Math.floor(Math.random() * cities.length + 1);
     let cityID: number = cities[number].id;
-    axios
+    requests.Weather.random(cityID)
+      .then((res: IWeather) => {
+        this.city = res;
+      })
+      .catch((err) => {
+        alert("Errors");
+      });
+    /*   axios
       .get(
         `http://api.openweathermap.org/data/2.5/weather?id=${cityID}&units=metric&APPID=${key}`
       )
@@ -65,7 +72,7 @@ export default class Random extends Vue {
         this.city = cityWeather;
         this.componentKey += 1;
       })
-      .catch((err) => console.log("Errors", err));
+      .catch((err) => console.log("Errors", err)); */
   }
 
   getWindDirection(windDeg: number) {

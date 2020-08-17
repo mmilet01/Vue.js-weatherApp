@@ -11,6 +11,7 @@
     "ordered-imports": false,
     "object-literal-sort-keys": false,
     "no-consecutive-blank-lines": false,
-    "vue/no-use-v-if-with-v-for": "off"
+    "vue/no-use-v-if-with-v-for": "off",
+    "one-variable-per-declaration": false
   }
 }

@@ -23,6 +23,7 @@ import { IForecastArray } from "../Interfaces/ForecastArrayInterface";
 import { IDate } from "../Interfaces/DateInterface";
 import { Dictionary } from "vue-router/types/router";
 const constants = require("../assets/constants.json");
+import requests from "../api/requests";
 
 @Component({
   components: {
@@ -129,6 +130,11 @@ export default class Details extends Vue {
     }); */
     let id: any = this.$route.params.id;
 
+    requests.Weather.forecast(id).then((res: IForecastArray[]) => {
+      this.forecastArray = res;
+      console.log(res, "inside detaisl");
+    });
+    /* 
     axios
       .get(
         `http://api.openweathermap.org/data/2.5/forecast?id=${id}&units=metric&APPID=${this.key}`
@@ -165,10 +171,10 @@ export default class Details extends Vue {
         }
 
         this.createForecastArray();
-        /*         loader.hide();
-         */
+              //  loader.hide();
+        
       })
-      .catch((err) => console.log("Errors", err));
+      .catch((err) => console.log("Errors", err)); */
 
     axios
       .get(
