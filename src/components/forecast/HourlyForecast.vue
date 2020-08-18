@@ -1,15 +1,15 @@
 <template>
   <div class="hourly">
-    <p>{{forecast.hour}}h</p>
+    <p>{{city.hour}}h</p>
     <div class="weather">
       <div class="desc">
         <div>
-          <img v-bind:src="forecast.icon" />
+          <img v-bind:src="city.icon" />
         </div>
-        <h3>{{forecast.description}}</h3>
-        <p>{{forecast.details}}</p>
+        <h3>{{city.description}}</h3>
+        <p>{{city.details}}</p>
       </div>
-      <p class="temp">{{forecast.temperature}} °C</p>
+      <p class="temp">{{city.temperature}} °C</p>
     </div>
   </div>
 </template>
@@ -20,20 +20,7 @@ import { IForecast } from "../../Interfaces/ForecastInterface";
 
 @Component({})
 export default class CityForecast extends Vue {
-  forecast: IForecast = {} as any;
-
-  @Prop() city!: any;
-
-  created() {
-    this.prepareData();
-  }
-  prepareData() {
-    this.forecast.icon = this.city.icon;
-    this.forecast.hour = this.city.hour;
-    this.forecast.temperature = this.city.temperature;
-    this.forecast.description = this.city.description;
-    this.forecast.details = this.city.details;
-  }
+  @Prop() city: IForecast;
 }
 </script>
 

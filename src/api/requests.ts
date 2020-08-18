@@ -15,24 +15,13 @@ const Weather = {
       .then((res) => {
         const weather: IWeather[] = [];
         res.data.list.forEach((city: any) => {
-          const cityWeather: IWeather = {
-            id: city.id,
-            temperature: Math.round(city.main.temp),
-            wind_speed: city.wind.speed,
-            details: city.weather[0].description,
-            humidity: city.main.pressure,
-            pressure: city.main.humidity,
-            description: city.weather[0].main,
-            name: city.name,
-            icon: `http://openweathermap.org/img/w/${city.weather[0].icon}.png`,
-            wind_direction: helperFunctions.getWindDirection(city.wind.deg),
-          };
+          const cityWeather: IWeather = helperFunctions.getWeatherData(city);
           weather.push(cityWeather);
         });
         return weather;
       })
       .catch((err) => {
-        return err;
+        throw err;
       }),
 
   forecast: (id: string): Promise<any> =>
@@ -109,30 +98,36 @@ const Weather = {
         );
         return forecastArray;
       })
-      .catch((err) => console.log("Errors", err)),
+      .catch((err) => {
+        throw err;
+      }),
 
-  random: (id: number): Promise<any> =>
+  cityById: (id: number): Promise<any> =>
     axios
       .get(
         `http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=${constants.API_KEY}`
       )
       .then((res) => {
-        console.log("inside randomcity", res);
-        const cityWeather: IWeather = {
-          id: res.data.id,
-          temperature: Math.round(res.data.main.temp),
-          wind_speed: res.data.wind.speed,
-          details: res.data.weather[0].description,
-          humidity: res.data.main.pressure,
-          pressure: res.data.main.humidity,
-          description: res.data.weather[0].main,
-          name: res.data.name,
-          icon: `http://openweathermap.org/img/w/${res.data.weather[0].icon}.png`,
-          wind_direction: helperFunctions.getWindDirection(res.data.wind.deg),
-        };
+        const cityWeather: IWeather = helperFunctions.getWeatherData(res.data);
         return cityWeather;
       })
-      .catch((err) => console.log("Errors", err)),
+      .catch((err) => {
+        throw err;
+      }),
+
+  cityByName: (name: string): Promise<any> =>
+    axios
+      .get(
+        `http://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&APPID=${constants.API_KEY}`
+      )
+      .then((res) => {
+        console.log(res);
+        const cityWeather: IWeather = helperFunctions.getWeatherData(res.data);
+        return cityWeather;
+      })
+      .catch((err) => {
+        throw err;
+      }),
 };
 
 export default {

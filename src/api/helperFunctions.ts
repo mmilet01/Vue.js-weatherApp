@@ -1,8 +1,24 @@
 import { IDate } from "@/Interfaces/DateInterface";
 import { WeekDays } from "@/Enums/Enums";
 import { IForecastArray } from "@/Interfaces/ForecastArrayInterface";
+import { IWeather } from "@/Interfaces/WeatherInterface";
 
 export default {
+  getWeatherData(data: any): IWeather {
+    return {
+      id: data.id,
+      temperature: Math.round(data.main.temp),
+      wind_speed: data.wind.speed,
+      details: data.weather[0].description,
+      humidity: data.main.pressure,
+      pressure: data.main.humidity,
+      description: data.weather[0].main,
+      name: data.name,
+      icon: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
+      wind_direction: this.getWindDirection(data.wind.deg),
+    };
+  },
+
   getForecastData(data: any) {
     return {
       icon: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
@@ -21,7 +37,7 @@ export default {
   }, */
 
   createForecastArray(data: any) {
-    const forecastArray: Array<IForecastArray> = [];
+    const forecastArray: IForecastArray[] = [];
     const {
       firstDay,
       firstDayDate,
@@ -89,7 +105,7 @@ export default {
   getDateAndMonth(unixTimestamp: number) {
     const date = new Date(unixTimestamp * 1000);
     const returnDate: IDate = {
-      month: date.getUTCMonth(),
+      month: date.getUTCMonth().toString(),
       date: date.getUTCDate(),
       day: this.convertEnumToString(date.getUTCDay()),
     };

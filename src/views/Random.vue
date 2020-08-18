@@ -36,63 +36,20 @@ import requests from "../api/requests";
 })
 export default class Random extends Vue {
   city: IWeather | null = null;
-  componentKey: number = 0;
   created() {
     this.randomCity();
   }
 
   randomCity() {
-    let number = Math.floor(Math.random() * cities.length + 1);
-    let cityID: number = cities[number].id;
-    requests.Weather.random(cityID)
+    const number = Math.floor(Math.random() * cities.length + 1);
+    const cityID: number = cities[number].id;
+    requests.Weather.cityById(cityID)
       .then((res: IWeather) => {
         this.city = res;
       })
       .catch((err) => {
         alert("Errors");
       });
-    /*   axios
-      .get(
-        `http://api.openweathermap.org/data/2.5/weather?id=${cityID}&units=metric&APPID=${key}`
-      )
-      .then((res) => {
-        console.log("inside randomcity", res);
-        let cityWeather: IWeather = {
-          id: res.data.id,
-          temperature: Math.round(res.data.main.temp),
-          wind_speed: res.data.wind.speed,
-          details: res.data.weather[0].description,
-          humidity: res.data.main.pressure,
-          pressure: res.data.main.humidity,
-          description: res.data.weather[0].main,
-          name: res.data.name,
-          icon: `http://openweathermap.org/img/w/${res.data.weather[0].icon}.png`,
-          wind_direction: this.getWindDirection(res.data.wind.deg),
-        };
-        this.city = cityWeather;
-        this.componentKey += 1;
-      })
-      .catch((err) => console.log("Errors", err)); */
-  }
-
-  getWindDirection(windDeg: number) {
-    if (windDeg >= 22.5 && windDeg <= 67.5) {
-      return "NE";
-    } else if (windDeg >= 67.5 && windDeg <= 112.5) {
-      return "N";
-    } else if (windDeg >= 112.5 && windDeg <= 157.5) {
-      return "NW";
-    } else if (windDeg >= 157.5 && windDeg <= 202.5) {
-      return "W";
-    } else if (windDeg >= 202.5 && windDeg <= 247.5) {
-      return "SW";
-    } else if (windDeg >= 247.5 && windDeg <= 292.5) {
-      return "S";
-    } else if (windDeg >= 292.5 && windDeg <= 337.5) {
-      return "SE";
-    } else {
-      return "E";
-    }
   }
 }
 </script>

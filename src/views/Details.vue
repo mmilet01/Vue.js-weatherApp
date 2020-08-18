@@ -2,8 +2,8 @@
   <div>
     <h1>Current weather</h1>
 
-    <div v-if="!!city2">
-      <SingleCity v-bind:city="city2" />
+    <div v-if="!!cityDetails">
+      <CityDetails v-bind:cityWeather="cityDetails" />
     </div>
     <!--     <div v-if="!!cityName">
     -->
@@ -15,8 +15,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
-import SingleCity from "@/components/SingleCity.vue";
 import CityForecast from "@/components/forecast/CityForecast.vue";
+import CityDetails from "@/components/CityDetails.vue";
 import { WeekDays } from "../Enums/Enums";
 import { IForecast } from "../Interfaces/ForecastInterface";
 import { IForecastArray } from "../Interfaces/ForecastArrayInterface";
@@ -27,14 +27,14 @@ import requests from "../api/requests";
 
 @Component({
   components: {
-    SingleCity,
     CityForecast,
+    CityDetails,
   },
 })
 export default class Details extends Vue {
   key: string = constants.API_KEY;
   cityName: string;
-  city2: any = null;
+  cityDetails: any = null;
 
   forecastArray: IForecastArray[] = [];
 
@@ -114,7 +114,7 @@ export default class Details extends Vue {
   getDateAndMonth(unixTimestamp: number) {
     const date = new Date(unixTimestamp * 1000);
     let returnDate: IDate = {
-      month: date.getUTCMonth(),
+      month: date.getUTCMonth().toString(),
       date: date.getUTCDate(),
       day: this.convertEnumToString(date.getUTCDay()),
     };
@@ -122,13 +122,7 @@ export default class Details extends Vue {
   }
 
   created() {
-    /* let loader = this.$loading.show({
-      // Optional parameters
-      container: this.fullPage ? null : this.$refs.formContainer,
-      canCancel: true,
-      onCancel: this.onCancel,
-    }); */
-    let id: any = this.$route.params.id;
+    const id: any = this.$route.params.id;
 
     requests.Weather.forecast(id).then((res: IForecastArray[]) => {
       this.forecastArray = res;
@@ -176,14 +170,9 @@ export default class Details extends Vue {
       })
       .catch((err) => console.log("Errors", err)); */
 
-    axios
-      .get(
-        `http://api.openweathermap.org/data/2.5/weather?id=${id}&units=metric&APPID=${this.key}`
-      )
+    requests.Weather.cityById(id)
       .then((res) => {
-        console.log("details result2", res);
-        this.city2 = res.data;
-        console.log(this.city2);
+        this.cityDetails = res;
       })
       .catch((err) => console.log("Errors", err));
   }

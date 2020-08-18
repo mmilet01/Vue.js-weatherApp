@@ -1,5 +1,5 @@
 export interface IDate {
-  month: number;
+  month: string;
   date: number;
   day: string;
 }

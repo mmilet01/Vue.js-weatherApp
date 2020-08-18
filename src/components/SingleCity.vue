@@ -33,6 +33,11 @@
 
 <script lang="ts">
 // CURRENTLY IRRELEVANT COMPONENT, NOT USED -> CODE REFACTORING
+// CURRENTLY IRRELEVANT COMPONENT, NOT USED -> CODE REFACTORING
+// CURRENTLY IRRELEVANT COMPONENT, NOT USED -> CODE REFACTORING
+// CURRENTLY IRRELEVANT COMPONENT, NOT USED -> CODE REFACTORING
+// CURRENTLY IRRELEVANT COMPONENT, NOT USED -> CODE REFACTORING
+// CURRENTLY IRRELEVANT COMPONENT, NOT USED -> CODE REFACTORING
 
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { IWeather } from "../Interfaces/WeatherInterface";
@@ -46,8 +51,8 @@ export default class CityWeather extends Vue {
   @Prop() city!: any;
 
   created() {
-    /* this.getIcon();
-    this.getWindDirection(); */
+  //  this.getIcon();
+   // this.getWindDirection();
     this.prepareData();
   }
 
