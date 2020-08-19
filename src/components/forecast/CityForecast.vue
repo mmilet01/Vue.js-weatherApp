@@ -1,10 +1,8 @@
 <template>
   <div class="wrapper">
     <h1>{{cityName}} - 5 day forrecast</h1>
-    <div>
-      <div v-for="(week ,index) in cityForecast" v-bind:key="index" class="forecast">
-        <OneDayForecast v-if="week.forecastData.length" v-bind:week="week" v-bind:index="index" />
-      </div>
+    <div v-for="(week ,index) in cityForecast" v-bind:key="index" class="forecast">
+      <OneDayForecast v-if="week.forecastData.length" v-bind:week="week" v-bind:index="index" />
     </div>
   </div>
 </template>
@@ -16,8 +14,8 @@ import { IForecastArray } from "../../Interfaces/ForecastArrayInterface";
 
 @Component({
   components: {
-    OneDayForecast
-  }
+    OneDayForecast,
+  },
 })
 export default class CityForecast extends Vue {
   @Prop() cityForecast: IForecastArray;
@@ -31,6 +29,6 @@ export default class CityForecast extends Vue {
   border-top: 1px solid blue;
 }
 .forecast {
-  margin-top: 50px;
+  margin-top: 2.5rem;
 }
 </style>

@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-    <CityWeather v-bind:weather="weather" msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+  <CityWeather v-bind:weather="weather" />
 </template>
 
 <script lang="ts">

@@ -6,9 +6,7 @@
         <button v-on:click="randomCity">Random</button> city
       </h1>
     </div>
-    <div v-if="!!city">
-      <CityDetails v-bind:cityWeather="city" />
-    </div>
+    <CityDetails v-if="!!city" v-bind:cityWeather="city" />
     <div class="right">
       <h1>Not the city you want?</h1>
       <SearchInput />

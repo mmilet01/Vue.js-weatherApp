@@ -17,7 +17,7 @@
       <p>Humidity: {{cityWeather.humidity}}%</p>
       <p>Pressure: {{cityWeather.pressure}} hPa</p>
       <p>Wind: {{cityWeather.wind_speed}}m/s {{cityWeather.windDirection}}</p>
-      <button class="link">
+      <button class="link" v-if="shouldShowButton">
         <router-link class="link" v-bind:to="routeURL">Forecast</router-link>
       </button>
     </div>
@@ -31,10 +31,16 @@ import { IWeather } from "../Interfaces/WeatherInterface";
 @Component({})
 export default class CityWeather extends Vue {
   routeURL: string;
+  shouldShowButton: boolean;
 
   @Prop() cityWeather: IWeather;
 
   created() {
+    if (this.$route.name == "details") {
+      this.shouldShowButton = false;
+    } else {
+      this.shouldShowButton = true;
+    }
     this.routeURL = "/city/" + this.cityWeather.id;
   }
 }
@@ -81,6 +87,9 @@ p {
   margin: 3px;
   padding: 5px;
 }
+.description {
+  margin: auto;
+}
 @media only screen and (max-width: 700px) {
   .container {
     display: flex;
@@ -94,9 +103,6 @@ p {
     margin-right: 10%;
   }
   .weather {
-    margin: auto;
-  }
-  .description {
     margin: auto;
   }
 }

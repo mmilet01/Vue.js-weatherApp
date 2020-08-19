@@ -1,28 +1,24 @@
 <template>
-  <div class="hello">
-    <div v-if="!!weather">
-      <div class="sortFilter">
-        <select class="select" v-on:change="sort">
-          <option value selected disabled hidden>Sort</option>
-          <option value="1">Low to high</option>
-          <option value="2">High to low</option>
-          <option value="3">Alphabeticly</option>
-        </select>
-        <h1>Current Weather</h1>
-        <input v-on:keyup="filter" type="text" placeholder="Filter Cities" v-model="search" />
-      </div>
-
-      <div
-        class="bColor"
-        v-for="(city,index) in filter"
-        v-bind:class="{'backColor': index % 2 === 0}"
-        v-bind:key="city.id"
-      >
-        <CityDetails v-bind:cityWeather="city" />
-      </div>
+  <div v-if="!!weather">
+    <div class="sortFilter">
+      <select class="select" v-on:change="sort">
+        <option value selected disabled hidden>Sort</option>
+        <option value="1">Low to high</option>
+        <option value="2">High to low</option>
+        <option value="3">Alphabeticly</option>
+      </select>
+      <h1>Current Weather</h1>
+      <input v-on:keyup="filter" type="text" placeholder="Filter Cities" v-model="search" />
     </div>
-    <div v-else>Loading....</div>
+    <CityDetails
+      class="bColor"
+      v-for="(city,index) in filter"
+      v-bind:class="{'backColor': index % 2 === 0}"
+      v-bind:key="city.id"
+      v-bind:cityWeather="city"
+    />
   </div>
+  <div v-else>Loading....</div>
 </template>
 
 <script lang="ts">
@@ -35,8 +31,8 @@ const constants = require("../assets/constants.json");
 
 @Component({
   components: {
-    CityDetails
-  }
+    CityDetails,
+  },
 })
 export default class CityWeather extends Vue {
   search: string = "";
@@ -88,25 +84,12 @@ export default class CityWeather extends Vue {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .bColor {
-  margin: 0;
   background-color: lightblue;
 }
 .backColor {
   background-color: white;
-}
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
 }
 
 .select {
@@ -130,10 +113,11 @@ option {
   display: flex;
   justify-content: space-between;
   border-bottom: 4px solid dodgerblue;
+  padding: 0px 15px 0px 15px;
 }
 .sortFilter h1 {
   color: dodgerblue;
-  padding-left: 70px;
+  padding: 0px 50px 0px 50px;
 }
 input {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

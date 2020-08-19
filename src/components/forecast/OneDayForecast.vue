@@ -2,9 +2,7 @@
   <div>
     <h2>{{date.day}} - {{date.date}}.{{date.month}}</h2>
     <div class="forecast">
-      <div v-for="city in forecastData" v-bind:key="city.hour" class="forecast2">
-        <HourlyForecast v-bind:city="city" />
-      </div>
+      <HourlyForecast v-for="city in forecastData" v-bind:key="city.hour" v-bind:city="city" />
     </div>
   </div>
 </template>
@@ -28,7 +26,7 @@ export default class Details extends Vue {
   created() {
     this.forecastData = this.week.forecastData;
     this.date = this.week.date;
-    if (+this.date.month < 10) {
+    if (+this.date.month < 10 && this.date.month.length < 2) {
       this.date.month = "0" + this.date.month;
     }
   }
@@ -42,14 +40,8 @@ h2 {
 .forecast {
   display: flex;
   justify-content: flex-start;
-  flex-wrap: wrap;
-}
-.forecast2 {
-  width: 12.5%;
+  margin: auto;
 }
 @media only screen and (max-width: 700px) {
-  .forecast2 {
-    width: 150px;
-  }
 }
 </style>

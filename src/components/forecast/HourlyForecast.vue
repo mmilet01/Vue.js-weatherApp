@@ -27,6 +27,7 @@ export default class CityForecast extends Vue {
 <style scoped>
 .hourly {
   border: 1px solid dodgerblue;
+  width: 12.5%;
 }
 .temp {
   color: rgb(224, 99, 99);

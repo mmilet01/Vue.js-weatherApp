@@ -2,14 +2,14 @@
   <footer>
     <div class="subscribe">
       <h1>Subscribe to WeatherApp</h1>
-      <input type="text" placeholder="Enter e-mail">
+      <input type="text" placeholder="Enter e-mail" />
     </div>
     <div class="follow">
       <h2>Follow us</h2>
       <div class="icons">
-        <i class="fab fa-twitter fa-2x"/>
-        <i class="fab fa-facebook-square fa-2x"/>
-        <i class="fab fa-instagram fa-2x"/>
+        <i class="fab fa-twitter fa-2x" />
+        <i class="fab fa-facebook-square fa-2x" />
+        <i class="fab fa-instagram fa-2x" />
       </div>
     </div>
   </footer>
@@ -17,9 +17,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({
-  //all component options are allowed in here
-})
+@Component({})
 export default class Navbar extends Vue {}
 </script>
 
@@ -39,6 +37,9 @@ input {
   border-bottom: 2px solid darkblue;
   color: darkblue;
   margin-bottom: 15px;
+}
+input::placeholder {
+  color: black;
 }
 .follow {
   display: flex;
