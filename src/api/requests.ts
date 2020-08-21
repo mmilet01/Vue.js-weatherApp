@@ -63,7 +63,6 @@ const Weather = {
             res.data.list[i]
           );
           const date = new Date(res.data.list[i].dt * 1000).getDate();
-          console.log(date, todaysDate);
           if (date === todaysDate) {
             firstDay.push(forecastData);
           } else if (i < firstDay.length + 8) {
@@ -96,7 +95,7 @@ const Weather = {
         forecastArray = helperFunctions.createForecastArray(
           dataForForecastArray
         );
-        return forecastArray;
+        return { forecast: forecastArray, cityName };
       })
       .catch((err) => {
         throw err;

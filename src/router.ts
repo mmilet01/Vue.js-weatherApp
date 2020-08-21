@@ -26,5 +26,10 @@ export default new Router({
       name: "details",
       component: () => import("./views/Details.vue"),
     },
+    {
+      path: "/saved",
+      name: "saved",
+      component: () => import("./views/Saved.vue"),
+    },
   ],
 });

@@ -1,6 +1,9 @@
 <template>
   <div class="container" v-if="!!cityWeather">
-    <h1 class="name">{{cityWeather.name}}</h1>
+    <div>
+      <h1 class="name">{{cityWeather.name}}</h1>
+      <button v-on:click="saveToLocalStorage">{{buttonText}}</button>
+    </div>
 
     <div class="temp">
       <i class="fas fa-thermometer-half fa-2x"></i>
@@ -25,15 +28,48 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import { IWeather } from "../Interfaces/WeatherInterface";
 
 @Component({})
 export default class CityWeather extends Vue {
   routeURL: string;
   shouldShowButton: boolean;
+  shouldShowSaveButton: boolean;
+  buttonText: string;
+  ids: Array<any> = [];
 
   @Prop() cityWeather: IWeather;
+
+  saveToLocalStorage() {
+    this.ids = JSON.parse(localStorage.getItem("ids")!);
+    if (this.ids == null) {
+      this.ids = [];
+      this.ids.push(this.cityWeather.id);
+      localStorage.setItem("ids", JSON.stringify(this.ids));
+    } else {
+      const existingId = this.ids.find((id) => id == this.cityWeather.id);
+      if (existingId == undefined) {
+        this.ids.push(this.cityWeather.id);
+      } else {
+        this.ids = this.ids.filter((id) => id != this.cityWeather.id);
+      }
+      localStorage.setItem("ids", JSON.stringify(this.ids));
+    }
+    this.getButtonText();
+    this.$forceUpdate();
+  }
+
+  getButtonText() {
+    this.ids = JSON.parse(localStorage.getItem("ids")!);
+    const existingId = this.ids.find((id) => id == this.cityWeather.id);
+    if (existingId == undefined) {
+      this.buttonText = "Save";
+    } else {
+      this.buttonText = "Remove from saved";
+    }
+    this.$emit("my-event", this.buttonText);
+  }
 
   created() {
     if (this.$route.name == "details") {
@@ -41,6 +77,12 @@ export default class CityWeather extends Vue {
     } else {
       this.shouldShowButton = true;
     }
+    if (this.$route.name == "saved") {
+      this.shouldShowSaveButton = false;
+    } else {
+      this.shouldShowSaveButton = true;
+    }
+    this.getButtonText();
     this.routeURL = "/city/" + this.cityWeather.id;
   }
 }

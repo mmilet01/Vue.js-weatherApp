@@ -6,7 +6,7 @@
     </form>
 
     <div v-if="!!cityData">
-      <CityDetails v-bind:cityWeather="cityData" />
+      <CityDetails v-bind:cityWeather="cityData" v-bind:key="cityData.id" />
     </div>
   </div>
 </template>

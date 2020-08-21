@@ -17,6 +17,8 @@
       <router-link class="link" to="/">Home</router-link>
       <span>|</span>
       <router-link class="link" to="/random">Random</router-link>
+      <span>|</span>
+      <router-link class="link" to="/saved">Saved</router-link>
     </div>
   </div>
 </template>
