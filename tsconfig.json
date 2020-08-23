@@ -12,7 +12,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "strictPropertyInitialization": false,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "allowJs": true,
     "types": ["webpack-env"],
     "paths": {

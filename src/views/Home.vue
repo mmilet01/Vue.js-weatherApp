@@ -24,12 +24,20 @@ export default class Home extends Vue {
   weather: IWeather[] = [];
 
   created() {
+    let loader = this.$loading.show({
+      // Optional parameters
+      container: this.fullPage ? null : this.$refs.formContainer,
+      canCancel: true,
+      onCancel: this.onCancel,
+    });
     requests.Weather.list()
       .then((res: IWeather[]) => {
         this.weather = res;
+        loader.hide();
       })
       .catch((err) => {
         alert("Errors");
+        loader.hide();
       });
   }
 }

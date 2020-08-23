@@ -28,18 +28,29 @@ export default class Details extends Vue {
   forecastArray: IForecastArray[] = [];
 
   created() {
+    let loader = this.$loading.show({
+      // Optional parameters
+      container: this.fullPage ? null : this.$refs.formContainer,
+      canCancel: true,
+      onCancel: this.onCancel,
+    });
     const id: any = this.$route.params.id;
 
     requests.Weather.forecast(id).then((res) => {
       this.forecastArray = res.forecast;
       this.cityName = res.cityName;
+      loader.hide();
     });
 
     requests.Weather.cityById(id)
       .then((res) => {
+        loader.hide();
         this.cityDetails = res;
       })
-      .catch((err) => console.log("Errors", err));
+      .catch((err) => {
+        console.log("Errors", err);
+        loader.hide();
+      });
   }
 }
 </script>

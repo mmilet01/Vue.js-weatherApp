@@ -12,7 +12,6 @@
       <SearchInput />
     </div>
   </div>
-  <div v-else>Loading</div>
 </template>
 
 <script lang="ts">
@@ -28,6 +27,7 @@ const constants = require("../assets/constants.json");
 import axios from "axios";
 import { IWeather } from "@/Interfaces/WeatherInterface";
 import requests from "../api/requests";
+import { set } from "vue/types/umd";
 
 @Component({
   components: {
@@ -37,27 +37,31 @@ import requests from "../api/requests";
 })
 export default class Random extends Vue {
   city: IWeather | null = null;
+  isLoading: boolean;
+
   created() {
-    console.log(Loading);
+    this.isLoading = true;
+    this.randomCity();
+  }
+
+  randomCity() {
+    //errors shown but works
     let loader = this.$loading.show({
       // Optional parameters
       container: this.fullPage ? null : this.$refs.formContainer,
       canCancel: true,
       onCancel: this.onCancel,
     });
-    this.randomCity();
-    loader.hide();
-  }
-
-  randomCity() {
     const number = Math.floor(Math.random() * cities.length + 1);
     const cityID: number = cities[number].id;
     requests.Weather.cityById(cityID)
       .then((res: IWeather) => {
         this.city = res;
+        loader.hide();
       })
       .catch((err) => {
         alert("Errors");
+        loader.hide();
       });
   }
 }
