@@ -12,6 +12,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "strictPropertyInitialization": false,
+    "noImplicitAny": true,
+    "allowJs": true,
     "types": ["webpack-env"],
     "paths": {
       "@/*": ["src/*"]

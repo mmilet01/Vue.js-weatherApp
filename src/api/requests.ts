@@ -63,7 +63,10 @@ const Weather = {
             res.data.list[i]
           );
           const date = new Date(res.data.list[i].dt * 1000).getDate();
-          if (date === todaysDate) {
+          if (
+            date === todaysDate ||
+            (res.data.list[32].dt === res.data.list[39].dt && i < 8)
+          ) {
             firstDay.push(forecastData);
           } else if (i < firstDay.length + 8) {
             secondDay.push(forecastData);
@@ -120,7 +123,6 @@ const Weather = {
         `http://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&APPID=${constants.API_KEY}`
       )
       .then((res) => {
-        console.log(res);
         const cityWeather: IWeather = helperFunctions.getWeatherData(res.data);
         return cityWeather;
       })

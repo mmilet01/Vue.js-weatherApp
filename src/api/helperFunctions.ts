@@ -2,6 +2,7 @@ import { IDate } from "@/Interfaces/DateInterface";
 import { WeekDays } from "@/Enums/Enums";
 import { IForecastArray } from "@/Interfaces/ForecastArrayInterface";
 import { IWeather } from "@/Interfaces/WeatherInterface";
+import { IForecast } from "@/Interfaces/ForecastInterface";
 
 export default {
   getWeatherData(data: any): IWeather {
@@ -19,7 +20,7 @@ export default {
     };
   },
 
-  getForecastData(data: any) {
+  getForecastData(data: any): IForecast {
     return {
       icon: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
       hour: data.dt_txt.slice(11, 16),
@@ -36,7 +37,7 @@ export default {
     });
   }, */
 
-  createForecastArray(data: any) {
+  createForecastArray(data: any): IForecastArray[] {
     const forecastArray: IForecastArray[] = [];
     const {
       firstDay,
@@ -83,7 +84,7 @@ export default {
     return forecastArray;
   },
 
-  convertEnumToString(day: WeekDays) {
+  convertEnumToString(day: WeekDays): string {
     switch (day) {
       case WeekDays.Monday:
         return "Monday";
@@ -102,7 +103,7 @@ export default {
     }
   },
 
-  getDateAndMonth(unixTimestamp: number) {
+  getDateAndMonth(unixTimestamp: number): IDate {
     const date = new Date(unixTimestamp * 1000);
     const returnDate: IDate = {
       month: date.getUTCMonth().toString(),
@@ -112,7 +113,7 @@ export default {
     return returnDate;
   },
 
-  getWindDirection(windDeg: number) {
+  getWindDirection(windDeg: number): string {
     if (windDeg >= 22.5 && windDeg <= 67.5) {
       return "NE";
     } else if (windDeg >= 67.5 && windDeg <= 112.5) {

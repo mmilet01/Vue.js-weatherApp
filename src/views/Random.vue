@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about" v-if="city">
     <div class="nav">
       <h1>
         Weather in a
@@ -12,6 +12,7 @@
       <SearchInput />
     </div>
   </div>
+  <div v-else>Loading</div>
 </template>
 
 <script lang="ts">
@@ -19,7 +20,9 @@ import { Component, Vue } from "vue-property-decorator";
 import SearchInput from "@/components/SearchInput.vue";
 import RandomCity from "@/components/RandomCity.vue";
 import CityDetails from "@/components/CityDetails.vue";
-
+import "vue-loading-overlay/dist/vue-loading.css";
+/* import Loading from "vue-loading-overlay";
+ */ const Loading = require("vue-loading-overlay");
 let cities: Array<any> = require("../assets/city.list.json");
 const constants = require("../assets/constants.json");
 import axios from "axios";
@@ -35,7 +38,15 @@ import requests from "../api/requests";
 export default class Random extends Vue {
   city: IWeather | null = null;
   created() {
+    console.log(Loading);
+    let loader = this.$loading.show({
+      // Optional parameters
+      container: this.fullPage ? null : this.$refs.formContainer,
+      canCancel: true,
+      onCancel: this.onCancel,
+    });
     this.randomCity();
+    loader.hide();
   }
 
   randomCity() {
