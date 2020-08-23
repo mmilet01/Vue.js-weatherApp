@@ -6,11 +6,14 @@
         <button v-on:click="randomCity">Random</button> city
       </h1>
     </div>
-    <CityDetails v-if="!!city" v-bind:cityWeather="city" />
+    <CityDetails v-if="!!city" v-bind:cityWeather="city"/>
     <div class="right">
       <h1>Not the city you want?</h1>
-      <SearchInput />
+      <SearchInput/>
     </div>
+  </div>
+  <div v-else>
+    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="true"></loading>
   </div>
 </template>
 
@@ -20,8 +23,7 @@ import SearchInput from "@/components/SearchInput.vue";
 import RandomCity from "@/components/RandomCity.vue";
 import CityDetails from "@/components/CityDetails.vue";
 import "vue-loading-overlay/dist/vue-loading.css";
-/* import Loading from "vue-loading-overlay";
- */ const Loading = require("vue-loading-overlay");
+import Loading from "vue-loading-overlay";
 let cities: Array<any> = require("../assets/city.list.json");
 const constants = require("../assets/constants.json");
 import axios from "axios";
@@ -33,7 +35,8 @@ import { set } from "vue/types/umd";
   components: {
     SearchInput,
     CityDetails,
-  },
+    Loading
+  }
 })
 export default class Random extends Vue {
   city: IWeather | null = null;
@@ -45,23 +48,17 @@ export default class Random extends Vue {
   }
 
   randomCity() {
-    //errors shown but works
-    let loader = this.$loading.show({
-      // Optional parameters
-      container: this.fullPage ? null : this.$refs.formContainer,
-      canCancel: true,
-      onCancel: this.onCancel,
-    });
     const number = Math.floor(Math.random() * cities.length + 1);
     const cityID: number = cities[number].id;
+    this.isLoading = true;
     requests.Weather.cityById(cityID)
       .then((res: IWeather) => {
         this.city = res;
-        loader.hide();
+        this.isLoading = false;
       })
-      .catch((err) => {
+      .catch(err => {
         alert("Errors");
-        loader.hide();
+        this.isLoading = false;
       });
   }
 }

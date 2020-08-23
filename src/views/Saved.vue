@@ -6,11 +6,12 @@
       v-bind:class="{'backColor': index % 2 === 0}"
       v-bind:key="city.id"
       v-bind:cityWeather="city"
-      v-on:my-event="doSomething"
     />
   </div>
   <div v-else>
-    <h1 v-if="this.isLoading">Loading...</h1>
+    <div v-if="this.isLoading">
+      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="true"></loading>
+    </div>
     <h1 v-if="!this.isLoading">Nothing Saved yet</h1>
   </div>
 </template>
@@ -20,11 +21,14 @@ import { Component, Vue } from "vue-property-decorator";
 import CityDetails from "@/components/CityDetails.vue"; // @ is an alias to /src
 import { IWeather } from "@/Interfaces/WeatherInterface";
 import requests from "../api/requests";
+import "vue-loading-overlay/dist/vue-loading.css";
+import Loading from "vue-loading-overlay";
 
 @Component({
   components: {
     CityDetails,
-  },
+    Loading
+  }
 })
 export default class Home extends Vue {
   ids: Array<number>;
@@ -36,25 +40,25 @@ export default class Home extends Vue {
 
     if (this.ids.length !== 0) {
       this.isLoading = true;
-
+      /* 
       let loader = this.$loading.show({
         // Optional parameters
         container: this.fullPage ? null : this.$refs.formContainer,
         canCancel: true,
         onCancel: this.onCancel,
-      });
+      }); */
       this.ids.forEach((id: any) => {
         requests.Weather.cityById(id)
-          .then((res) => {
+          .then(res => {
             this.weather.push(res);
-            loader.hide();
-            this.isLoading = false;
+            /*             loader.hide();
+             */ this.isLoading = false;
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
             alert("Please try again later");
-            loader.hide();
-            this.isLoading = false;
+            /*             loader.hide();
+             */ this.isLoading = false;
           });
       });
     }

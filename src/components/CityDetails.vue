@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="!!cityWeather">
+  <div class="container">
     <div>
       <h1 class="name">{{cityWeather.name}}</h1>
       <button v-on:click="saveToLocalStorage">{{buttonText}}</button>
@@ -11,7 +11,7 @@
     </div>
 
     <div class="weather">
-      <img v-bind:src="cityWeather.icon" />
+      <img v-bind:src="cityWeather.icon">
       <h3>{{cityWeather.description}}</h3>
       <p>{{cityWeather.details}}</p>
     </div>
@@ -36,7 +36,7 @@ export default class CityWeather extends Vue {
   routeURL: string;
   shouldShowButton: boolean;
   shouldShowSaveButton: boolean;
-  buttonText: string;
+  buttonText: string = "";
   ids: Array<any> = [];
 
   @Prop() cityWeather: IWeather;
@@ -48,11 +48,11 @@ export default class CityWeather extends Vue {
       this.ids.push(this.cityWeather.id);
       localStorage.setItem("ids", JSON.stringify(this.ids));
     } else {
-      const existingId = this.ids.find((id) => id == this.cityWeather.id);
+      const existingId = this.ids.find(id => id == this.cityWeather.id);
       if (existingId == undefined) {
         this.ids.push(this.cityWeather.id);
       } else {
-        this.ids = this.ids.filter((id) => id != this.cityWeather.id);
+        this.ids = this.ids.filter(id => id != this.cityWeather.id);
       }
       localStorage.setItem("ids", JSON.stringify(this.ids));
     }
@@ -62,13 +62,12 @@ export default class CityWeather extends Vue {
 
   getButtonText() {
     this.ids = JSON.parse(localStorage.getItem("ids")!);
-    const existingId = this.ids.find((id) => id == this.cityWeather.id);
+    const existingId = this.ids.find(id => id == this.cityWeather.id);
     if (existingId == undefined) {
       this.buttonText = "Save";
     } else {
       this.buttonText = "Remove from saved";
     }
-    this.$emit("my-event", this.buttonText);
   }
 
   created() {

@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <div v-if="cityDetails !== null">
     <h1>Current weather</h1>
-    <CityDetails v-if="!!cityDetails" v-bind:cityWeather="cityDetails" />
-    <CityForecast v-bind:cityForecast="forecastArray" v-bind:cityName="cityName" />
+    <CityDetails v-bind:cityWeather="cityDetails"/>
+    <CityForecast v-bind:cityForecast="forecastArray" v-bind:cityName="cityName"/>
+  </div>
+  <div v-else>
+    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="true"></loading>
   </div>
 </template>
 
@@ -14,42 +17,46 @@ import { IForecast } from "../Interfaces/ForecastInterface";
 import { IForecastArray } from "../Interfaces/ForecastArrayInterface";
 import requests from "../api/requests";
 import { IWeather } from "@/Interfaces/WeatherInterface";
+import "vue-loading-overlay/dist/vue-loading.css";
+import Loading from "vue-loading-overlay";
 
 @Component({
   components: {
     CityForecast,
     CityDetails,
-  },
+    Loading
+  }
 })
 export default class Details extends Vue {
-  cityName: string;
+  cityName: string = "";
   cityDetails: IWeather | null = null;
-
   forecastArray: IForecastArray[] = [];
+  isLoading: boolean;
 
   created() {
-    let loader = this.$loading.show({
-      // Optional parameters
-      container: this.fullPage ? null : this.$refs.formContainer,
-      canCancel: true,
-      onCancel: this.onCancel,
-    });
+    this.isLoading = true;
     const id: any = this.$route.params.id;
 
-    requests.Weather.forecast(id).then((res) => {
-      this.forecastArray = res.forecast;
-      this.cityName = res.cityName;
-      loader.hide();
-    });
+    requests.Weather.forecast(id)
+      .then(res => {
+        this.forecastArray = res.forecast;
+        this.cityName = res.cityName;
+        this.isLoading = false;
+      })
+      .catch(err => {
+        console.log("Errors", err);
+        alert("Please try again later");
+        this.isLoading = false;
+      });
 
     requests.Weather.cityById(id)
-      .then((res) => {
-        loader.hide();
+      .then(res => {
         this.cityDetails = res;
+        this.isLoading = false;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log("Errors", err);
-        loader.hide();
+        this.isLoading = false;
       });
   }
 }

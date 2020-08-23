@@ -8,7 +8,7 @@
         <option value="3">Alphabeticly</option>
       </select>
       <h1>Current Weather</h1>
-      <input v-on:keyup="filter" type="text" placeholder="Filter Cities" v-model="search" />
+      <input v-on:keyup="filter" type="text" placeholder="Filter Cities" v-model="search">
     </div>
     <CityDetails
       class="bColor"
@@ -18,7 +18,6 @@
       v-bind:cityWeather="city"
     />
   </div>
-  <div v-else>Loading....</div>
 </template>
 
 <script lang="ts">
@@ -31,8 +30,8 @@ const constants = require("../assets/constants.json");
 
 @Component({
   components: {
-    CityDetails,
-  },
+    CityDetails
+  }
 })
 export default class CityWeather extends Vue {
   search: string = "";
